@@ -1,0 +1,6 @@
+rootProject.name = 'backend'
+
+include 'bff'
+
+include 'user'
+include 'admin'
