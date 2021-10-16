@@ -1,1 +1,1 @@
-# Gym Team app - BFF Service
+# Gym Team app backend - BFF Service
