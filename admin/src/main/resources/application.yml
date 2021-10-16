@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: admin-service
+  cloud:
+    consul:
+      host: ${SPRING_CONSUL_HOST}
+      port: ${SPRING_CONSUL_PORT}
+      discovery:
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}
+        healthCheckPath: /my-health-check
+        healthCheckInterval: 20s
+      config:
+        enabled: false # TODO Enable config
+    loadbalancer:
+      cache:
+        enabled: false
