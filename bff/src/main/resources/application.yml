@@ -1,0 +1,21 @@
+server:
+  port: ${SPRING_APPLICATION_PORT}
+spring:
+  application:
+    name: bff-service
+  cloud:
+    discovery:
+      enabled: true
+    consul:
+      host: ${SPRING_CONSUL_HOST}
+      port: ${SPRING_CONSUL_PORT}
+      discovery:
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}
+        healthCheckPath: /my-health-check
+        healthCheckInterval: 20s
+      config:
+        enabled: false
+    loadbalancer:
+      cache:
+        enabled: false

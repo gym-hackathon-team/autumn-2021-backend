@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    discovery:
+      enabled: false
+    consul:
+      enabled: false
+    loadbalancer:
+      cache:
+        enabled: false

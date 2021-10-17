@@ -1,1 +1,1 @@
-# Gym Team app - Admin Service
+# Gym Team app backend - Admin Service
