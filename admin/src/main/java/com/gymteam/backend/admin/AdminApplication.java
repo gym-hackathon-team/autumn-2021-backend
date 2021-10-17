@@ -19,7 +19,7 @@ public class AdminApplication {
 
     @GetMapping("/my-health-check")
     public ResponseEntity<String> myCustomCheck() {
-        String message = "Testing my health check function";
+        String message = "Still alive";
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 

@@ -33,7 +33,11 @@ services:
     depends_on:
       - consul
     ports:
-      - "8080:8080"
+      - "8081:8080"
+    environment:
+      - SPRING_APPLICATION_PORT=8080
+      - SPRING_CONSUL_HOST=consul
+      - SPRING_CONSUL_PORT=8500
 
   user:
     image: "${USER_SERVICE_IMAGE_NAME}:${USER_SERVICE_IMAGE_TAG}"
@@ -43,7 +47,11 @@ services:
     depends_on:
       - consul
     ports:
-      - "8081:8081"
+      - "8082:8080"
+    environment:
+      - SPRING_APPLICATION_PORT=8080
+      - SPRING_CONSUL_HOST=consul
+      - SPRING_CONSUL_PORT=8500
 
   admin:
     image: "${ADMIN_SERVICE_IMAGE_NAME}:${ADMIN_SERVICE_IMAGE_TAG}"
@@ -53,12 +61,13 @@ services:
     depends_on:
       - consul
     ports:
-      - "8083:8083"
+      - "8083:8080"
     links:
       - consul
     environment:
-      - SPRING_CONSUL_HOST=consul # TODO Get from consul
-      - SPRING_CONSUL_PORT=8500 # TODO Get from consul
+      - SPRING_APPLICATION_PORT=8080
+      - SPRING_CONSUL_HOST=consul
+      - SPRING_CONSUL_PORT=8500
 
 volumes:
   postgres-data:

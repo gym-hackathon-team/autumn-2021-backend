@@ -23,9 +23,17 @@ ext {
 }
 
 dependencies {
+    // Service Discovery
+    implementation 'org.springframework.cloud:spring-cloud-starter-consul-all:3.0.4'
+
+    // Web
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+
+    // Utils
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
 }
 
