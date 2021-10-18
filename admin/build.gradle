@@ -26,6 +26,9 @@ dependencies {
     // Service Discovery
     implementation 'org.springframework.cloud:spring-cloud-starter-consul-all:3.0.4'
 
+    // Feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.4'
+
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
 
