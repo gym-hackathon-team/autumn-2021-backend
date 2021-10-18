@@ -16,6 +16,3 @@ spring:
         healthCheckInterval: 20s
       config:
         enabled: false
-    loadbalancer:
-      cache:
-        enabled: false
