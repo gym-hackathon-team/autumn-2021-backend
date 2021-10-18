@@ -38,6 +38,7 @@ dependencies {
 
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+    testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.1.4'
 }
 
 dependencyManagement {

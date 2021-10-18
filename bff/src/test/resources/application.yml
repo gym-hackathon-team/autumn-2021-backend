@@ -4,6 +4,5 @@ spring:
       enabled: false
     consul:
       enabled: false
-    loadbalancer:
-      cache:
+      config:
         enabled: false
