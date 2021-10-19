@@ -40,6 +40,7 @@ dependencies {
     // data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
     implementation 'org.postgresql:postgresql:42.2.24.jre7'
+    implementation 'org.flywaydb:flyway-core:8.0.1'
 
     // Utils
     compileOnly 'org.projectlombok:lombok:1.18.22'
