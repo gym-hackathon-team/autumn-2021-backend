@@ -1,16 +1,14 @@
+schema {
+    query: Query
+}
+
+#Test
 type Query {
-    bookById(id: ID): Book
+    books:[BookMapper]
 }
 
-type Book {
-    id: ID
-    name: String
-    pageCount: Int
-    author: Author
-}
-
-type Author {
-    id: ID
-    firstName: String
-    lastName: String
+type BookMapper{
+    title:String
+    author:String
+    year:Int
 }
