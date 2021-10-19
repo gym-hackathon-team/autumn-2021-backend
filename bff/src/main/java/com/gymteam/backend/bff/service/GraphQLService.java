@@ -1,6 +1,6 @@
 package com.gymteam.backend.bff.service;
 
-import com.gymteam.backend.bff.client.BookDataFetcherClient;
+import com.gymteam.backend.bff.repository.BookDataFetcherRepository;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.*;
@@ -24,7 +24,7 @@ public class GraphQLService {
 
 
     @Autowired
-    BookDataFetcherClient bookFetcher;
+    BookDataFetcherRepository bookFetcher;
 
     @Value("schema.graphqls")
     private ClassPathResource classPathLoader;

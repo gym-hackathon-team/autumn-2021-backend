@@ -1,4 +1,4 @@
-package com.gymteam.backend.bff.client;
+package com.gymteam.backend.bff.repository;
 
 import com.gymteam.backend.bff.dto.Book;
 import graphql.schema.DataFetcher;
@@ -10,7 +10,7 @@ import java.util.List;
 
 //Test
 @Repository
-public class BookDataFetcherClient implements DataFetcher<List<Book>> {
+public class BookDataFetcherRepository implements DataFetcher<List<Book>> {
 
     @Override
     public List<Book> get(DataFetchingEnvironment DataFetchingEnvironment)
