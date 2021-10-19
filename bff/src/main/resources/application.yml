@@ -1,6 +1,13 @@
 server:
   port: ${SPRING_APPLICATION_PORT}
 spring:
+
+
+  graphql:
+    schema:
+      locations: classpath:graphql/
+    path: /graphql
+
   application:
     name: bff-service
   cloud:

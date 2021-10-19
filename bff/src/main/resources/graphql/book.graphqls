@@ -1,0 +1,16 @@
+schema {
+    query: Query
+}
+
+
+type Query {
+    books:[BookMapper]
+    getBook(id :Int ):BookMapper
+}
+
+type BookMapper{
+    title:String
+    author:String
+    year:Int
+    id:Int
+}
