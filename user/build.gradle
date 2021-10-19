@@ -39,7 +39,7 @@ dependencies {
 
     // data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
-    implementation 'org.postgresql:postgresql:42.2.24.jre7'
+    runtimeOnly 'org.postgresql:postgresql:42.2.24.jre7'
     implementation 'org.flywaydb:flyway-core:8.0.1'
 
     // Utils
@@ -49,6 +49,7 @@ dependencies {
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
     testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.1.4'
+    testImplementation 'com.h2database:h2:1.4.200'
 }
 
 dependencyManagement {
