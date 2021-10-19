@@ -1,25 +1,13 @@
 package com.gymteam.backend.bff.dto;
-//Test
-public class Book {
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@AllArgsConstructor
+@Data
+final public class Book {
+    private int id;
     private String title;
     private String author;
     private int year;
-
-    public Book(String title, String author, int year) {
-        this.year = year;
-        this.author = author;
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getYear() {
-        return year;
-    }
 }

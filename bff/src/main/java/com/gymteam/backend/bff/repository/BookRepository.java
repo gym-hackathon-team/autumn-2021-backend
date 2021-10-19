@@ -8,14 +8,22 @@ import java.util.List;
 @Repository
 public class BookRepository {
 
-    private final List<Book> books=new ArrayList<>(){{
-        add(new Book("1984","Orwell",1949));
-        add(new Book("451","451",451));
+    private static final List<Book> books=new ArrayList<>(){{
+        add(new Book(1,"1984","Orwell",1949));
+        add(new Book(2,"451","451",451));
     }};
 
-    public List<Book> getAllBooks()
+    public static List<Book> getAllBooks()
     {
         return books;
+    }
+    public static Book getBook(int  id)
+    {
+        return books
+                .stream()
+                .filter(book->book.getId()==id)
+                .findFirst()
+                .orElse(null);
     }
 
 }
