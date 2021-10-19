@@ -31,6 +31,9 @@ dependencies {
 
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+    implementation 'com.graphql-java:graphql-java:11.0'
+    implementation 'com.graphql-java:graphql-java-spring-boot-starter-webmvc:1.0'
+    implementation 'com.google.guava:guava:26.0-jre'
 
     // Utils
     compileOnly 'org.projectlombok:lombok:1.18.22'
@@ -39,12 +42,6 @@ dependencies {
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
     testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.1.4'
-
-    //GraphQL
-    implementation 'com.graphql-java:graphql-java:11.0'
-    implementation 'com.graphql-java:graphql-java-spring-boot-starter-webmvc:1.0'
-    implementation 'com.google.guava:guava:26.0-jre'
-
 
 }
 
