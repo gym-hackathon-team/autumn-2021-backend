@@ -2,7 +2,7 @@ schema {
     query: Query
 }
 
-#Test
+
 type Query {
     books:[BookMapper]
 }
