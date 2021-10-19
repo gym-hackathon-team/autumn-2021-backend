@@ -1,8 +1,6 @@
 package com.gymteam.backend.bff.client;
 
-import com.google.common.collect.ImmutableMap;
-
-import com.gymteam.backend.bff.model.Book;
+import com.gymteam.backend.bff.dto.Book;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import org.springframework.stereotype.Repository;

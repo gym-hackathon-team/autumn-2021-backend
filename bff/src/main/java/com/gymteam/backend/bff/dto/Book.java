@@ -1,4 +1,4 @@
-package com.gymteam.backend.bff.model;
+package com.gymteam.backend.bff.dto;
 //Test
 public class Book {
     private String title;
