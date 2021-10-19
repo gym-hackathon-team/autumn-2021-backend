@@ -19,8 +19,8 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: validate
-    show-sql: false
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: true
     generate-ddl: false
   datasource:
     url: ${SPRING_DATASOURCE_URL}
