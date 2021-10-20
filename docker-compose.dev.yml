@@ -9,7 +9,7 @@ services:
       - "8500:8500"
 
   database:
-    image: "postgres:latest"
+    image: "postgres:13.4-alpine"
     container_name: database
     ports:
       - "5432:5432"
@@ -54,6 +54,11 @@ services:
       - SPRING_APPLICATION_PORT=8080
       - SPRING_CONSUL_HOST=consul
       - SPRING_CONSUL_PORT=8500
+
+      - SPRING_DATASOURCE_URL=${USER_SERVICE_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
   admin:
     image: "${ADMIN_SERVICE_IMAGE_NAME}:${ADMIN_SERVICE_IMAGE_TAG}"
