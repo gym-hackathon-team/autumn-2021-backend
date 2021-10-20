@@ -1,6 +1,13 @@
 server:
   port: ${SPRING_APPLICATION_PORT}
 spring:
+
+
+  graphql:
+    schema:
+      locations: classpath:graphql/
+    path: /graphql
+
   application:
     name: bff-service
   cloud:
@@ -15,4 +22,7 @@ spring:
         healthCheckPath: /my-health-check
         healthCheckInterval: 20s
       config:
+        enabled: false
+    loadbalancer:
+      cache:
         enabled: false
