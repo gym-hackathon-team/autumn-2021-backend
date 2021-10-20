@@ -6,10 +6,13 @@ schema {
 
 type Mutation
 {
-    user:userServiceMutation
+    updateUser(user:UserInput):User
+    createUser(user:UserInput):User
 }
 
 type Query {
     getAllBooks:[Book]
     getBook(id :Int ):Book
+
+    getUser(id: ID): User
 }
