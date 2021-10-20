@@ -35,7 +35,7 @@ services:
       - admin
       - user
     ports:
-      - "8081:8080"
+      - "8079:8080"
     environment:
       - SPRING_APPLICATION_PORT=8080
       - SPRING_CONSUL_HOST=consul
@@ -49,7 +49,7 @@ services:
     depends_on:
       - consul
     ports:
-      - "8082:8080"
+      - "8078:8080"
     environment:
       - SPRING_APPLICATION_PORT=8080
       - SPRING_CONSUL_HOST=consul
@@ -68,13 +68,18 @@ services:
     depends_on:
       - consul
     ports:
-      - "8083:8080"
+      - "8077:8080"
     links:
       - consul
     environment:
       - SPRING_APPLICATION_PORT=8080
       - SPRING_CONSUL_HOST=consul
       - SPRING_CONSUL_PORT=8500
+
+      - SPRING_DATASOURCE_URL=${ADMIN_SERVICE_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
 volumes:
   postgres-data:
