@@ -11,7 +11,7 @@ import java.util.List;
 @Controller
 public class BookController {
 
-    @SchemaMapping(typeName="Query", field="books")
+    @SchemaMapping(typeName="Query", field="getAllBooks")
     public List<Book> getBooks() {
         return BookRepository.getAllBooks();
     }

@@ -1,14 +1,8 @@
-schema {
-    query: Query
-}
 
 
-type Query {
-    books:[BookMapper]
-    getBook(id :Int ):BookMapper
-}
 
-type BookMapper{
+
+type Book{
     title:String
     author:String
     year:Int
