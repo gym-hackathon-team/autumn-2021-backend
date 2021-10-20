@@ -55,7 +55,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 250M
+          memory: 270M
 
   user:
     image: "${USER_SERVICE_IMAGE_NAME}:${USER_SERVICE_IMAGE_TAG}"
@@ -79,7 +79,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 250M
+          memory: 270M
 
   admin:
     image: "${ADMIN_SERVICE_IMAGE_NAME}:${ADMIN_SERVICE_IMAGE_TAG}"
@@ -105,7 +105,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 250M
+          memory: 270M
 
 volumes:
   postgres-data:
