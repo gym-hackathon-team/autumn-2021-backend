@@ -1,4 +1,4 @@
-package com.gymteam.backend.bff.config;
+/*package com.gymteam.backend.bff.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -31,4 +31,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
         http.authorizeRequests().antMatchers("/**").authenticated();
     }
-}
+}*/
