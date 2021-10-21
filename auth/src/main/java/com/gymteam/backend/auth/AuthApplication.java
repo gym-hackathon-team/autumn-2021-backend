@@ -20,7 +20,7 @@ public class AuthApplication {
     }
 
     @GetMapping("/my-health-check")
-    public ResponseEntity<String> myCustomCheck() {
+    public ResponseEntity<String> healthCheck() {
         String message = "Still alive";
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
