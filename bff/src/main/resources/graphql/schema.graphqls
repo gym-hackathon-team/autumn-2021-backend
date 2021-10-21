@@ -1,23 +1,25 @@
-schema {
-    query: Query
-    mutation: Mutation
-
+type Admin {
+    id: ID!
+    email: String
+    password: String
+    firstName: String
+    lastName: String
 }
 
-type Mutation
-{
-    updateUser(user:UserInput):User
-    createUser(user:UserInput):User
+type User {
+    id: ID!
+    email: String
+    password: String
+    firstName: String
+    lastName: String
+}
 
-    updateAdmin(admin:AdminInput):Admin
-    createAdmin(admin:AdminInput):Admin
+type Mutation {
+    updateUser(id: ID!, email: String, password: String, firstName: String, lastName: String): User
+    updateAdmin(id: ID!, email: String, password: String, firstName: String, lastName: String): Admin
 }
 
 type Query {
-    getAllBooks:[Book]
-    getBook(id :Int ):Book
-
     getUser(id: ID): User
-
     getAdmin(id: ID): Admin
 }

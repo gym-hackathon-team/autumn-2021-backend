@@ -2,7 +2,7 @@ server:
   port: ${SPRING_APPLICATION_PORT}
 spring:
   application:
-    name: bff-service
+    name: auth-service
   cloud:
     discovery:
       enabled: true
@@ -19,11 +19,15 @@ spring:
     loadbalancer:
       cache:
         enabled: false
-  graphql:
-    schema:
-      locations: classpath:graphql/
-    path: /graphql
-  security:
-    user:
-      name: ${SPRING_ACCESS_USER_NAME}
-      password: ${SPRING_ACCESS_USER_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: false
+    generate-ddl: false
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driverClassName: org.postgresql.Driver
+
