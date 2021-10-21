@@ -1,16 +1,21 @@
-/*package com.gymteam.backend.bff.config;
+package com.gymteam.backend.bff.config;
 
+import com.gymteam.backend.bff.filter.JwtFilter;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
+@EnableWebSecurity
 @AllArgsConstructor
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
 
-    private static final String[] AUTH_WHITELIST = {
+    private final JwtFilter jwtFilter;
+
+    public static final String[] AUTH_WHITELIST = {
             // GraphQL playground
             "/graphiql",
             "/vendor/**",
@@ -22,13 +27,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/auth/**"
     };
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.csrf().disable();
         http.cors().disable();
 
         http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
         http.authorizeRequests().antMatchers("/**").authenticated();
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
-}*/
+}
