@@ -27,16 +27,6 @@ services:
         limits:
           memory: 100M
 
-  keycloak:
-    image: "jboss/keycloak:latest"
-    container_name: keycloak
-    ports:
-      - "8484:8484"
-    deploy:
-      resources:
-        limits:
-          memory: 800M
-
   bff:
     image: "${BFF_SERVICE_IMAGE_NAME}:${BFF_SERVICE_IMAGE_TAG}"
     container_name: bff
@@ -44,6 +34,7 @@ services:
       context: bff
     depends_on:
       - consul
+      - auth
       - admin
       - user
     ports:
@@ -52,6 +43,34 @@ services:
       - SPRING_APPLICATION_PORT=8080
       - SPRING_CONSUL_HOST=consul
       - SPRING_CONSUL_PORT=8500
+
+      - SPRING_ACCESS_USER_NAME=${BFF_SERVICE_ACCESS_USER_NAME}
+      - SPRING_ACCESS_USER_PASSWORD=${BFF_SERVICE_ACCESS_USER_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          memory: 270M
+
+  auth:
+    image: "${AUTH_SERVICE_IMAGE_NAME}:${AUTH_SERVICE_IMAGE_TAG}"
+    container_name: auth
+    build:
+      context: auth
+    depends_on:
+      - consul
+      - admin
+      - user
+    ports:
+      - "8078:8080"
+    environment:
+      - SPRING_APPLICATION_PORT=8080
+      - SPRING_CONSUL_HOST=consul
+      - SPRING_CONSUL_PORT=8500
+
+      - SPRING_DATASOURCE_URL=${AUTH_SERVICE_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
     deploy:
       resources:
         limits:
@@ -66,7 +85,7 @@ services:
       - consul
       - database
     ports:
-      - "8078:8080"
+      - "8077:8080"
     environment:
       - SPRING_APPLICATION_PORT=8080
       - SPRING_CONSUL_HOST=consul
@@ -90,7 +109,7 @@ services:
       - consul
       - database
     ports:
-      - "8077:8080"
+      - "8076:8080"
     links:
       - consul
     environment:

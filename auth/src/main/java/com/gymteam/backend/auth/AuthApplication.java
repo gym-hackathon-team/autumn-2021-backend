@@ -1,4 +1,4 @@
-package com.gymteam.backend.bff;
+package com.gymteam.backend.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,19 +6,17 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableWebSecurity
 @RestController
-@SpringBootApplication
-public class BffApplication {
+public class AuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BffApplication.class, args);
+        SpringApplication.run(AuthApplication.class, args);
     }
 
     @GetMapping("/my-health-check")

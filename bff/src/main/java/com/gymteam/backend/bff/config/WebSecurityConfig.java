@@ -11,6 +11,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
+            // GraphQL playground
+            "/graphiql",
+            "/vendor/**",
+
             // Service Discovery
             "/my-health-check",
 
