@@ -29,6 +29,7 @@ ext {
 }
 
 dependencies {
+
     // Service Discovery
     implementation 'org.springframework.cloud:spring-cloud-starter-consul-all:3.0.4'
 
@@ -39,6 +40,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
     implementation 'org.springframework.experimental:graphql-spring-boot-starter:1.0.0-SNAPSHOT'
 
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.5.5'
+
     // Utils
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -46,7 +50,6 @@ dependencies {
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
     testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.1.4'
-
 }
 
 dependencyManagement {

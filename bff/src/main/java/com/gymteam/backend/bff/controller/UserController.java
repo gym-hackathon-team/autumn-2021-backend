@@ -1,8 +1,7 @@
 package com.gymteam.backend.bff.controller;
 
-
-import com.gymteam.backend.bff.client.UserServiceClient;
 import com.gymteam.backend.bff.dto.User;
+import com.gymteam.backend.bff.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
@@ -14,26 +13,15 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserController {
 
-    private final UserServiceClient userServiceClient;
+    private final UserService userService;
 
-    @SchemaMapping(typeName="Query", field="getUser")
-    User get(@Argument UUID id)
-    {
-        return userServiceClient.getUser(id);
+    @SchemaMapping(typeName = "Query", field = "getUser")
+    User get(@Argument UUID id) {
+        return userService.get(id);
     }
 
-
-    @SchemaMapping(typeName="Mutation", field="createUser")
-    User create(@Argument User user)
-    {
-        return userServiceClient.createUser(user);
+    @SchemaMapping(typeName = "Mutation", field = "updateUser")
+    User update(@Argument User user) {
+        return userService.update(user);
     }
-
-    @SchemaMapping(typeName="Mutation", field="updateUser")
-    User update(@Argument User user)
-    {
-
-        return userServiceClient.updateUser(user);
-    }
-
 }

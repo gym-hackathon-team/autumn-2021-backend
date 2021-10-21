@@ -7,17 +7,10 @@ schema {
 type Mutation
 {
     updateUser(user:UserInput):User
-    createUser(user:UserInput):User
-
     updateAdmin(admin:AdminInput):Admin
-    createAdmin(admin:AdminInput):Admin
 }
 
 type Query {
-    getAllBooks:[Book]
-    getBook(id :Int ):Book
-
     getUser(id: ID): User
-
     getAdmin(id: ID): Admin
 }
