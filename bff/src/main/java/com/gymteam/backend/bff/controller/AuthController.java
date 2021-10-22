@@ -1,14 +1,11 @@
 package com.gymteam.backend.bff.controller;
 
-import com.gymteam.backend.bff.dto.Admin;
-import com.gymteam.backend.bff.dto.User;
 import com.gymteam.backend.bff.dto.auth.*;
 import com.gymteam.backend.bff.exception.auth.FieldEmptyException;
 import com.gymteam.backend.bff.exception.auth.FieldMissingException;
 import com.gymteam.backend.bff.exception.auth.PasswordMismatchException;
 import com.gymteam.backend.bff.service.interfaces.AuthService;
 import feign.FeignException;
-import feign.RetryableException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,28 +36,16 @@ public class AuthController {
         }
         catch (FeignException e)
         {
-            int status;
+
             if (e.status()==-1)
             {
-                status=503;
-            }
-            if (e.status()==403)
-            {
-                status=403;
-            }
-            if (e.status()==401)
-            {
-                status=401;
-            }
-            if (e.status()==400)
-            {
-                status=400;
+                return new ResponseEntity<>(e.toString(),HttpStatus.SERVICE_UNAVAILABLE);
             }
             else
             {
-                status=500;
+                return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(e.status()));
             }
-            return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(status));
+
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,8 +56,6 @@ public class AuthController {
     public ResponseEntity<Object> signUpAdmin(@RequestBody AdminRegisterRequest request) {
         try {
             return new ResponseEntity<>(authService.signUpAdmin(request), HttpStatus.OK);
-        } catch (PasswordMismatchException e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
         catch(FieldMissingException e)
         {
@@ -82,30 +65,21 @@ public class AuthController {
         {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+        catch (PasswordMismatchException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
         catch (FeignException e)
         {
-            int status;
+
             if (e.status()==-1)
             {
-                status=503;
-            }
-            if (e.status()==403)
-            {
-                status=403;
-            }
-            if (e.status()==401)
-            {
-                status=401;
-            }
-            if (e.status()==400)
-            {
-                status=400;
+                return new ResponseEntity<>(e.toString(),HttpStatus.SERVICE_UNAVAILABLE);
             }
             else
             {
-                status=500;
+                return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(e.status()));
             }
-            return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(status));
+
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -127,28 +101,16 @@ public class AuthController {
         }
         catch (FeignException e)
         {
-            int status;
+
             if (e.status()==-1)
             {
-                status=503;
-            }
-            if (e.status()==403)
-            {
-                status=403;
-            }
-            if (e.status()==401)
-            {
-                status=401;
-            }
-            if (e.status()==400)
-            {
-                status=400;
+                return new ResponseEntity<>(e.toString(),HttpStatus.SERVICE_UNAVAILABLE);
             }
             else
             {
-                status=500;
+                return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(e.status()));
             }
-            return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(status));
+
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -159,8 +121,6 @@ public class AuthController {
     public ResponseEntity<Object> signUpUser(@RequestBody UserRegisterRequest request) {
         try {
             return new ResponseEntity<>(authService.signUpUser(request), HttpStatus.OK);
-        } catch (PasswordMismatchException e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
         catch(FieldMissingException e)
         {
@@ -170,30 +130,21 @@ public class AuthController {
         {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+        catch (PasswordMismatchException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
         catch (FeignException e)
         {
-            int status;
+
             if (e.status()==-1)
             {
-                status=503;
-            }
-            if (e.status()==403)
-            {
-                status=403;
-            }
-            if (e.status()==401)
-            {
-                status=401;
-            }
-            if (e.status()==400)
-            {
-                status=400;
+                return new ResponseEntity<>(e.toString(),HttpStatus.SERVICE_UNAVAILABLE);
             }
             else
             {
-                status=500;
+                return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(e.status()));
             }
-            return new ResponseEntity<>(e.toString(),HttpStatus.valueOf(status));
+
         }
         catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

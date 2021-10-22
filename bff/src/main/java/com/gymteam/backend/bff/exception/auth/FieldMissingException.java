@@ -4,9 +4,13 @@ import lombok.Getter;
 
 @Getter
 public class FieldMissingException extends Exception{
-    String message="Some required fields are missing";
+    String message;
     public FieldMissingException()
     {
-
+        this.message="Some required fields are missing";
+    }
+    public FieldMissingException(String message)
+    {
+        this.message=message;
     }
 }
