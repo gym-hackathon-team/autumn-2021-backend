@@ -15,8 +15,7 @@ public interface AuthClient {
     @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
     TokenDto signInUser(@RequestBody UserLoginRequest userLoginRequest);
 
-    @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
-    UserDto signUpUser(@RequestBody UserDto userDto);
+
 
     @RequestMapping(value = "/token/authorize", method = RequestMethod.GET)
     Optional<AuthorizedDto> authorize(@RequestHeader String jwt);
