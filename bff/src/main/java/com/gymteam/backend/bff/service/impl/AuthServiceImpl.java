@@ -20,11 +20,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public TokenDto signInUser(UserLoginRequest request) {
-        UserDto userDto = new UserDto();
-        userDto.setEmail(request.getEmail());
-        userDto.setPassword(request.getPassword());
 
-        return authClient.signInUser(userDto);
+        return authClient.signInUser(request);
     }
 
     @Override
