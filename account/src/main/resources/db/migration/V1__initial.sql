@@ -1,0 +1,23 @@
+CREATE TABLE ACCOUNTS
+(
+    ID      UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    NUMBER  VARCHAR(20) NOT NULL,
+    USER_ID UUID        NOT NULL
+);
+
+CREATE TABLE CARDS
+(
+    ID         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    BALANCE    FLOAT       NOT NULL,
+    ACCOUNT_ID UUID        NOT NULL,
+    NUMBER     VARCHAR(16) NOT NULL
+);
+
+CREATE TABLE PAYMENTS
+(
+    ID           UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    FROM_ACCOUNT UUID UNIQUE NOT NULL,
+    FROM_CARD    UUID        NOT NULL,
+    TO_CARD      UUID        NOT NULL,
+    AMOUNT       FLOAT       NOT NULL
+);

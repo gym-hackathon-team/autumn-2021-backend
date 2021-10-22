@@ -4,3 +4,5 @@ include 'bff'
 include 'auth'
 
 include 'user'
+
+include 'account'

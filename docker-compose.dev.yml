@@ -7,10 +7,6 @@ services:
     container_name: consul
     ports:
       - "8500:8500"
-    deploy:
-      resources:
-        limits:
-          memory: 100M
 
   database:
     image: "postgres:13.4-alpine"
@@ -22,10 +18,6 @@ services:
       - POSTGRES_PASSWORD=${DATASOURCE_PASSWORD}
     volumes:
       - postgres-data:${DATASOURCE_VOLUME}
-    deploy:
-      resources:
-        limits:
-          memory: 150M
 
   bff:
     image: "${BFF_SERVICE_IMAGE_NAME}:${BFF_SERVICE_IMAGE_TAG}"
@@ -45,10 +37,6 @@ services:
 
       - SPRING_ACCESS_USER_NAME=${BFF_SERVICE_ACCESS_USER_NAME}
       - SPRING_ACCESS_USER_PASSWORD=${BFF_SERVICE_ACCESS_USER_PASSWORD}
-    deploy:
-      resources:
-        limits:
-          memory: 300M
 
   auth:
     image: "${AUTH_SERVICE_IMAGE_NAME}:${AUTH_SERVICE_IMAGE_TAG}"
@@ -69,10 +57,6 @@ services:
       - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create
-    deploy:
-      resources:
-        limits:
-          memory: 300M
 
   user:
     image: "${USER_SERVICE_IMAGE_NAME}:${USER_SERVICE_IMAGE_TAG}"
@@ -93,10 +77,26 @@ services:
       - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
-    deploy:
-      resources:
-        limits:
-          memory: 300M
+
+  account:
+    image: "${ACCOUNT_SERVICE_IMAGE_NAME}:${ACCOUNT_SERVICE_IMAGE_TAG}"
+    container_name: user
+    build:
+      context: user
+    depends_on:
+      - consul
+      - database
+    ports:
+      - "8077:8080"
+    environment:
+      - SPRING_APPLICATION_PORT=8080
+      - SPRING_CONSUL_HOST=consul
+      - SPRING_CONSUL_PORT=8500
+
+      - SPRING_DATASOURCE_URL=${AUTH_SERVICE_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
 volumes:
   postgres-data:
