@@ -1,11 +1,3 @@
-type Admin {
-    id: ID!
-    email: String
-    password: String
-    firstName: String
-    lastName: String
-}
-
 type User {
     id: ID!
     email: String
@@ -16,10 +8,8 @@ type User {
 
 type Mutation {
     updateUser(id: ID!, email: String, password: String, firstName: String, lastName: String): User
-    updateAdmin(id: ID!, email: String, password: String, firstName: String, lastName: String): Admin
 }
 
 type Query {
     getUser(id: ID): User
-    getAdmin(id: ID): Admin
 }

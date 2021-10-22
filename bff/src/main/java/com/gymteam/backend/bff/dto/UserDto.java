@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class User {
+public class UserDto {
 
     private UUID id;
 

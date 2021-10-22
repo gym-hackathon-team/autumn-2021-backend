@@ -1,7 +1,7 @@
 package com.gymteam.backend.bff.mutation;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.gymteam.backend.bff.dto.User;
+import com.gymteam.backend.bff.dto.UserDto;
 import com.gymteam.backend.bff.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,14 +14,14 @@ public class UserMutation implements GraphQLMutationResolver {
 
     private final UserService userService;
 
-    public User updateUser(UUID id, String email, String password, String firstName, String lastName) {
-        User user = new User();
-        user.setId(id);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+    public UserDto updateUser(UUID id, String email, String password, String firstName, String lastName) {
+        UserDto userDto = new UserDto();
+        userDto.setId(id);
+        userDto.setEmail(email);
+        userDto.setPassword(password);
+        userDto.setFirstName(firstName);
+        userDto.setLastName(lastName);
 
-        return userService.update(user);
+        return userService.update(userDto);
     }
 }

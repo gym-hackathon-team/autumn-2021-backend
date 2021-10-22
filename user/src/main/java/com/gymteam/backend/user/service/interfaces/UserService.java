@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public interface UserService {
 
+    User getUserByEmailAndPassword(String email, String password) throws NotFoundException;
+
     User getUser(UUID id) throws NotFoundException;
 
     void createUser(User user);

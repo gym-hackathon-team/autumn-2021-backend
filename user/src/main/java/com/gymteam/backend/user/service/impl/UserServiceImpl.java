@@ -17,6 +17,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    public User getUserByEmailAndPassword(String email, String password) throws NotFoundException {
+        Optional<User> customerOptional = userRepository.findUserByEmailAndPassword(email, password);
+        return customerOptional.orElseThrow(NotFoundException::new);
+    }
+
+    @Override
     public User getUser(UUID id) throws NotFoundException {
         Optional<User> customerOptional = userRepository.findById(id);
         return customerOptional.orElseThrow(NotFoundException::new);

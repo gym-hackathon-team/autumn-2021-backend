@@ -21,6 +21,17 @@ public class UserController {
 
     private final UserMapper userMapper;
 
+    @GetMapping(value = "/")
+    public ResponseEntity<UserDto> getUserByEmailAndPassword(@RequestHeader String login, @RequestHeader String password) {
+        try {
+            return new ResponseEntity<>(userMapper.convertToDto(userService.getUserByEmailAndPassword(login, password)), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> read(@PathVariable UUID id) {
         try {

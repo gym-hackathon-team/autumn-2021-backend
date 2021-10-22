@@ -1,12 +1,12 @@
 package com.gymteam.backend.bff.service.interfaces;
 
-import com.gymteam.backend.bff.dto.User;
+import com.gymteam.backend.bff.dto.UserDto;
 
 import java.util.UUID;
 
 public interface UserService {
 
-    User get(UUID id);
+    UserDto get(UUID id);
 
-    User update(User user);
+    UserDto update(UserDto userDto);
 }

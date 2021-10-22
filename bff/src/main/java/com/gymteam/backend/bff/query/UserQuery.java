@@ -1,7 +1,7 @@
 package com.gymteam.backend.bff.query;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.gymteam.backend.bff.dto.User;
+import com.gymteam.backend.bff.dto.UserDto;
 import com.gymteam.backend.bff.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class UserQuery implements GraphQLQueryResolver {
 
     private final UserService userService;
 
-    public User getUser(UUID id) {
+    public UserDto getUser(UUID id) {
         return userService.get(id);
     }
 }

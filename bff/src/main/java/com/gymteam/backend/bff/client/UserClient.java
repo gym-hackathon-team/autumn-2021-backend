@@ -1,6 +1,6 @@
 package com.gymteam.backend.bff.client;
 
-import com.gymteam.backend.bff.dto.User;
+import com.gymteam.backend.bff.dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +13,11 @@ import java.util.UUID;
 public interface UserClient {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    User createUser(@RequestBody User user);
+    UserDto createUser(@RequestBody UserDto userDto);
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    User updateUser(@RequestBody User user);
+    UserDto updateUser(@RequestBody UserDto userDto);
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    User getUser(@PathVariable UUID id);
+    UserDto getUser(@PathVariable UUID id);
 }

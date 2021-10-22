@@ -1,11 +1,11 @@
-package com.gymteam.backend.auth.dto.auth;
+package com.gymteam.backend.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class AdminRegisterRequest {
+public class UserRegisterRequest {
 
     private final String email;
 

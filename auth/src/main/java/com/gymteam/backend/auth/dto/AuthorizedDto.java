@@ -1,4 +1,4 @@
-package com.gymteam.backend.auth.dto.auth;
+package com.gymteam.backend.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
