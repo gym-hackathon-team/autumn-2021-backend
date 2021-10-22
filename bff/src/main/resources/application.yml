@@ -19,10 +19,6 @@ spring:
     loadbalancer:
       cache:
         enabled: false
-  graphql:
-    schema:
-      locations: classpath:graphql/
-    path: /graphql
   security:
     user:
       name: ${SPRING_ACCESS_USER_NAME}
