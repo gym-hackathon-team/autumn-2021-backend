@@ -27,8 +27,9 @@ public class TokenServiceImpl implements TokenService {
     @Override
     public Token create(UserDto user) {
         String value = jwtProvider.generateToken(user.getEmail());
+        Optional<Token> existing = tokenRepository.findTokenByValue(value);
 
-        return tokenRepository.save(createToken(value, user.getId(), "user"));
+        return existing.orElseGet(() -> tokenRepository.save(createToken(value, user.getId(), "user")));
     }
 
     private Token createToken(String value, UUID entityId, String scope) {
