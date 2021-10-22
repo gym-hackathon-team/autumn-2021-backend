@@ -7,7 +7,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceUserBFFMapperImpl implements UserServiceUserBffMapper {
 
-
+    @Override
+    public UserDto convertToUserServiceDto(com.gymteam.backend.auth.dto.bff.UserDto fromBff) {
+        UserDto fromUserService = new UserDto();
+        fromUserService.setId(fromBff.getId());
+        fromUserService.setEmail(fromBff.getEmail());
+        fromUserService.setPassword(fromBff.getPassword());
+        fromUserService.setFirstName(fromBff.getFirstName());
+        fromUserService.setLastName(fromBff.getLastName());
+        return fromUserService;
+    }
 
     @Override
     public com.gymteam.backend.auth.dto.bff.UserDto convertToUserBffDto(UserDto fromUserService) {
