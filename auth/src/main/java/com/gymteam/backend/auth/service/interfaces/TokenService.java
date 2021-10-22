@@ -1,6 +1,6 @@
 package com.gymteam.backend.auth.service.interfaces;
 
-import com.gymteam.backend.auth.dto.UserDto;
+import com.gymteam.backend.auth.dto.bff.UserDto;
 import com.gymteam.backend.auth.entity.Token;
 
 import java.util.Optional;

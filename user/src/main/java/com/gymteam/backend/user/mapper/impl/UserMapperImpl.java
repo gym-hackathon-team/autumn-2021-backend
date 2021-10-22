@@ -1,6 +1,6 @@
 package com.gymteam.backend.user.mapper.impl;
 
-import com.gymteam.backend.user.dto.UserDto;
+import com.gymteam.backend.user.dto.bff.UserDto;
 import com.gymteam.backend.user.entity.User;
 import com.gymteam.backend.user.mapper.interfaces.UserMapper;
 import org.springframework.stereotype.Service;

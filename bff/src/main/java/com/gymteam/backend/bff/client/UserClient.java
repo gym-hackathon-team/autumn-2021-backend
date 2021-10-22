@@ -1,6 +1,6 @@
 package com.gymteam.backend.bff.client;
 
-import com.gymteam.backend.bff.dto.UserDto;
+import com.gymteam.backend.bff.dto.user.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

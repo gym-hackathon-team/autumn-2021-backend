@@ -1,6 +1,6 @@
 package com.gymteam.backend.user.mapper.interfaces;
 
-import com.gymteam.backend.user.dto.UserDto;
+import com.gymteam.backend.user.dto.bff.UserDto;
 import com.gymteam.backend.user.entity.User;
 
 public interface UserMapper {

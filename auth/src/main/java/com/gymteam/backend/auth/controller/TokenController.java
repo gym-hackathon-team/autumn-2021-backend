@@ -1,6 +1,6 @@
 package com.gymteam.backend.auth.controller;
 
-import com.gymteam.backend.auth.dto.AuthorizedDto;
+import com.gymteam.backend.auth.dto.bff.AuthorizedDto;
 import com.gymteam.backend.auth.entity.Token;
 import com.gymteam.backend.auth.service.interfaces.TokenService;
 import com.gymteam.backend.auth.util.JwtProvider;

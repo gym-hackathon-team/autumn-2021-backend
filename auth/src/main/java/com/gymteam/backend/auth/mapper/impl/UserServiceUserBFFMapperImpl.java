@@ -1,32 +1,31 @@
-package com.gymteam.backend.user.mapper.impl;
+package com.gymteam.backend.auth.mapper.impl;
 
-import com.gymteam.backend.user.dto.bff.UserDto;
-import com.gymteam.backend.user.entity.User;
-import com.gymteam.backend.user.mapper.interfaces.UserMapper;
+import com.gymteam.backend.auth.dto.user.UserDto;
+import com.gymteam.backend.auth.mapper.interfaces.UserServiceUserBffMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserMapperImpl implements UserMapper {
+public class UserServiceUserBFFMapperImpl implements UserServiceUserBffMapper {
 
     @Override
-    public User convertToEntity(UserDto dto) {
-        User entity = new User();
-        entity.setId(dto.getId());
-        entity.setEmail(dto.getEmail());
-        entity.setPassword(dto.getPassword());
-        entity.setFirstName(dto.getFirstName());
-        entity.setLastName(dto.getLastName());
-        return entity;
+    public UserDto convertToUserServiceDto(com.gymteam.backend.auth.dto.bff.UserDto fromBff) {
+        UserDto fromUserService = new UserDto();
+        fromUserService.setId(fromBff.getId());
+        fromUserService.setEmail(fromBff.getEmail());
+        fromUserService.setPassword(fromBff.getPassword());
+        fromUserService.setFirstName(fromBff.getFirstName());
+        fromUserService.setLastName(fromBff.getLastName());
+        return fromUserService;
     }
 
     @Override
-    public UserDto convertToDto(User entity) {
-        UserDto dto = new UserDto();
-        dto.setId(entity.getId());
-        dto.setEmail(entity.getEmail());
-        dto.setPassword(entity.getPassword());
-        dto.setFirstName(entity.getFirstName());
-        dto.setLastName(entity.getLastName());
-        return dto;
+    public com.gymteam.backend.auth.dto.bff.UserDto convertToUserBffDto(UserDto fromUserService) {
+        com.gymteam.backend.auth.dto.bff.UserDto fromBff = new com.gymteam.backend.auth.dto.bff.UserDto();
+        fromBff.setId(fromUserService.getId());
+        fromBff.setEmail(fromUserService.getEmail());
+        fromBff.setPassword(fromUserService.getPassword());
+        fromBff.setFirstName(fromUserService.getFirstName());
+        fromBff.setLastName(fromUserService.getLastName());
+        return fromBff;
     }
 }

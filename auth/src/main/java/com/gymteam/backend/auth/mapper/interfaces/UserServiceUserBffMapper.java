@@ -1,11 +1,10 @@
-package com.gymteam.backend.user.mapper.interfaces;
+package com.gymteam.backend.auth.mapper.interfaces;
 
-import com.gymteam.backend.user.dto.bff.UserDto;
-import com.gymteam.backend.user.entity.User;
+import com.gymteam.backend.auth.dto.user.UserDto;
 
-public interface UserMapper {
+public interface UserServiceUserBffMapper {
 
-    User convertToEntity(UserDto dto);
+    UserDto convertToUserServiceDto(com.gymteam.backend.auth.dto.bff.UserDto fromBff);
 
-    UserDto convertToDto(User dto);
+    com.gymteam.backend.auth.dto.bff.UserDto convertToUserBffDto(UserDto fromUserService);
 }

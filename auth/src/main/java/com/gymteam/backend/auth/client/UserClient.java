@@ -1,6 +1,6 @@
 package com.gymteam.backend.auth.client;
 
-import com.gymteam.backend.auth.dto.UserDto;
+import com.gymteam.backend.auth.dto.user.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;

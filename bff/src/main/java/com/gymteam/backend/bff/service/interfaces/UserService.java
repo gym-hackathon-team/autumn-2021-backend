@@ -1,6 +1,6 @@
 package com.gymteam.backend.bff.service.interfaces;
 
-import com.gymteam.backend.bff.dto.UserDto;
+import com.gymteam.backend.bff.dto.user.UserDto;
 
 import java.util.UUID;
 

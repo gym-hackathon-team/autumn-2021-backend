@@ -1,8 +1,8 @@
 package com.gymteam.backend.bff.client;
 
-import com.gymteam.backend.bff.dto.UserDto;
-import com.gymteam.backend.bff.dto.AuthorizedDto;
-import com.gymteam.backend.bff.dto.TokenDto;
+import com.gymteam.backend.bff.dto.auth.UserDto;
+import com.gymteam.backend.bff.dto.auth.AuthorizedDto;
+import com.gymteam.backend.bff.dto.auth.TokenDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

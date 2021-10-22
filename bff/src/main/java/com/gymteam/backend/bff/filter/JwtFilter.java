@@ -1,7 +1,7 @@
 package com.gymteam.backend.bff.filter;
 
 import com.gymteam.backend.bff.client.AuthClient;
-import com.gymteam.backend.bff.dto.AuthorizedDto;
+import com.gymteam.backend.bff.dto.auth.AuthorizedDto;
 import com.gymteam.backend.bff.security.Authorized;
 import com.gymteam.backend.bff.config.WebSecurityConfig;
 import lombok.RequiredArgsConstructor;

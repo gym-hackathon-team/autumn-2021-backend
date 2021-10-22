@@ -1,7 +1,7 @@
 package com.gymteam.backend.bff.mutation;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import com.gymteam.backend.bff.dto.UserDto;
+import com.gymteam.backend.bff.dto.user.UserDto;
 import com.gymteam.backend.bff.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
