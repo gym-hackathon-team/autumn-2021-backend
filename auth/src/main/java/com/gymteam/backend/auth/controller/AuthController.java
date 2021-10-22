@@ -3,7 +3,7 @@ package com.gymteam.backend.auth.controller;
 import com.gymteam.backend.auth.dto.bff.TokenDto;
 import com.gymteam.backend.auth.dto.bff.UserDto;
 import com.gymteam.backend.auth.dto.bff.UserLoginRequest;
-import com.gymteam.backend.auth.dto.bff.UserRegisterRequest;
+
 import com.gymteam.backend.auth.entity.Token;
 import com.gymteam.backend.auth.service.interfaces.TokenService;
 import com.gymteam.backend.auth.service.interfaces.UserService;
@@ -37,12 +37,5 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> signUpUser(@RequestBody UserRegisterRequest request) {
-        try {
-            return new ResponseEntity<>(userService.createUser(request), HttpStatus.OK);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-    }
+
 }

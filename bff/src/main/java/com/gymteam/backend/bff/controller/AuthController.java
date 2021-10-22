@@ -3,8 +3,7 @@ package com.gymteam.backend.bff.controller;
 import com.gymteam.backend.bff.dto.auth.TokenDto;
 import com.gymteam.backend.bff.dto.auth.UserDto;
 import com.gymteam.backend.bff.dto.auth.UserLoginRequest;
-import com.gymteam.backend.bff.dto.auth.UserRegisterRequest;
-import com.gymteam.backend.bff.exception.auth.PasswordMismatchException;
+
 import com.gymteam.backend.bff.service.interfaces.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,15 +30,5 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/user/register")
-    public ResponseEntity<UserDto> signUpUser(@RequestBody UserRegisterRequest request) {
-        try {
-            return new ResponseEntity<>(authService.signUpUser(request), HttpStatus.OK);
-        } catch (PasswordMismatchException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
 
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
