@@ -34,7 +34,8 @@ public class WebSecurityConfig {
         http.cors().disable();
 
         http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
-        http.authorizeRequests().antMatchers("/**").authenticated();
+        //http.authorizeRequests().antMatchers("/**").authenticated();
+        http.authorizeRequests().antMatchers("/**").permitAll();
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
