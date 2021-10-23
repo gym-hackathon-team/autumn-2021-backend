@@ -10,7 +10,7 @@ public interface AccountService {
 
     PaymentResultStatus createUserTransaction(UUID id,UUID cardId,String toCard);
 
-    PaymentResultStatus createFeePayment(UUID id,UUID cardId,UUID toAccount);
+    PaymentResultStatus createFeePayment(UUID id,UUID cardId,String toAccount);
 
     List<CardDto> getUserCards(UUID id);
 }

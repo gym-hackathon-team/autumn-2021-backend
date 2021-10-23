@@ -20,6 +20,6 @@ public class AccountMutation implements GraphQLMutationResolver {
     public PaymentResultStatus createUserTransaction(UUID id,UUID cardId,String toCard)
     {return accountService.createUserTransaction(id,cardId,toCard);}
 
-    public PaymentResultStatus createFeePayment(UUID id,UUID cardId,UUID toAccount)
+    public PaymentResultStatus createFeePayment(UUID id,UUID cardId,String toAccount)
     {return accountService.createFeePayment(id,cardId,toAccount);}
 }

@@ -22,15 +22,15 @@ public class AccountServiceImpl implements AccountService {
         return paymentResultStatus;
 
     }
-
-    public PaymentResultStatus createFeePayment(UUID id,UUID cardId,UUID toAccount)
+    @Override
+    public PaymentResultStatus createFeePayment(UUID id,UUID cardId,String toAccount)
     {
         //Test
         PaymentResultStatus paymentResultStatus=new PaymentResultStatus();
         paymentResultStatus.setStatus(true);
         return paymentResultStatus;
     }
-
+    @Override
     public List<CardDto> getUserCards(UUID id)
     {
         //Test
