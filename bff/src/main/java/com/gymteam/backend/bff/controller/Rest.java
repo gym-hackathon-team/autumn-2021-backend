@@ -4,6 +4,8 @@ import com.gymteam.backend.bff.dto.account.CardDto;
 import com.gymteam.backend.bff.dto.account.PaymentResultStatus;
 import com.gymteam.backend.bff.service.interfaces.AccountService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,17 +19,20 @@ public class Rest {
     private final AccountService accountService;
 
     @PostMapping("/createTransaction")
-    public PaymentResultStatus createUserTransaction(@RequestHeader UUID cardId, @RequestHeader String toCard) {
-        return accountService.createUserTransaction(cardId, toCard);
+    public ResponseEntity<PaymentResultStatus> createUserTransaction(@RequestHeader UUID cardId, @RequestHeader String toCard) {
+
+        return new ResponseEntity<>(accountService.createUserTransaction(cardId, toCard), HttpStatus.OK);
     }
 
     @PostMapping("/createPayment")
-    public PaymentResultStatus createFeePayment(UUID cardId, String toAccount) {
-        return accountService.createFeePayment(cardId, toAccount);
+    public ResponseEntity<PaymentResultStatus> createFeePayment(@RequestHeader UUID cardId,@RequestHeader String toAccount) {
+
+        return new ResponseEntity<>(accountService.createFeePayment(cardId, toAccount), HttpStatus.OK);
     }
 
     @GetMapping("/cards")
-    public List<CardDto> getUserCards() {
-        return accountService.getUserCards();
+    public ResponseEntity<List<CardDto>> getUserCards() {
+
+        return new ResponseEntity<>(accountService.getUserCards(), HttpStatus.OK);
     }
 }
