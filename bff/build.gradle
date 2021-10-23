@@ -47,8 +47,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
-    implementation 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
-
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
     testImplementation 'org.springframework.cloud:spring-cloud-stream-test-support:3.1.4'

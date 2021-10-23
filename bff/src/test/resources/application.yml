@@ -6,8 +6,3 @@ spring:
       enabled: false
       config:
         enabled: false
-graphql:
-  servlet:
-    enabled: false
-graphiql:
-  enabled: false
