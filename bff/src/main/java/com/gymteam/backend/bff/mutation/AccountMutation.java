@@ -1,6 +1,7 @@
 package com.gymteam.backend.bff.mutation;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+import com.gymteam.backend.bff.dto.account.AccountType;
 import com.gymteam.backend.bff.dto.account.PaymentCreateRequest;
 import com.gymteam.backend.bff.dto.account.PaymentDto;
 import com.gymteam.backend.bff.service.interfaces.AccountService;
@@ -15,13 +16,16 @@ public class AccountMutation implements GraphQLMutationResolver {
 
     private final AccountService accountService;
 
-    public PaymentDto createPayment(UUID fromAccount,UUID fromCard, UUID toCard,double amount)
+    public PaymentDto createPayment(double amount, UUID fromCard, AccountType type,UUID toCard, UUID toAccount)
     {
         PaymentCreateRequest paymentCreateRequest=new PaymentCreateRequest();
-        paymentCreateRequest.setFromAccount(fromAccount);
-        paymentCreateRequest.setFromCard(fromCard);
-        paymentCreateRequest.setToCard(toCard);
         paymentCreateRequest.setAmount(amount);
+        paymentCreateRequest.setFromCard(fromCard);
+        paymentCreateRequest.setType(type);
+        paymentCreateRequest.setToCard(toCard);
+        paymentCreateRequest.setToAccount(toAccount);
+
+
         return accountService.createPayment(paymentCreateRequest);
     }
 }

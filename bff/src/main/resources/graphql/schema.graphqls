@@ -6,13 +6,7 @@ type User {
     lastName: String
 }
 
-type Payment{
-    id:ID!
-    fromAccount:ID
-    fromCard:ID
-    toCard:ID
-    amount:Float
-}
+
 
 type Card{
     id:ID!
@@ -21,16 +15,34 @@ type Card{
     number:String
 }
 
+enum AccountType {
+    USER
+    ORGANIZATION
+}
+
 type Account{
     id:ID!
     number:String
+    type:AccountType
     userId:ID
+    organizationId:ID
+    balance:Float
+}
+
+type Payment{
+    id:ID!
+    amount:Float
+    fromCard:ID
+    type:AccountType
+    toCard:ID
+    toAccount:ID
+
 }
 
 type Mutation {
     updateUser(id: ID!, email: String, password: String, firstName: String, lastName: String): User
 
-    createPayment(fromAccount:ID,fromCard:ID,toCard:ID,amount:Float):Payment
+    createPayment(amount:Float,fromCard:ID,type:AccountType,toCard:ID,toAccount:ID):Payment
 }
 
 type Query {

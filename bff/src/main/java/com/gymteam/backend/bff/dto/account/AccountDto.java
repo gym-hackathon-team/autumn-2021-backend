@@ -11,5 +11,9 @@ public class AccountDto {
 
     private UUID id;
     private String number;
+    private AccountType type;
     private UUID userId;
+    private UUID organizationId;
+    private double balance;
 }
+

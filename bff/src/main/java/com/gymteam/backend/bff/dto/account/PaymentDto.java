@@ -9,8 +9,10 @@ import java.util.UUID;
 @Setter
 public class PaymentDto {
     private UUID id;
-    private UUID fromAccount;
-    private UUID fromCard;
-    private UUID toCard;
     private double amount;
+    private UUID fromCard;
+    private AccountType type;
+    private UUID toCard;
+    private UUID toAccount;
+
 }

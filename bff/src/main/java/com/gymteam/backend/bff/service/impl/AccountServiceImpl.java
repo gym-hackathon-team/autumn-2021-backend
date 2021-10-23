@@ -1,9 +1,6 @@
 package com.gymteam.backend.bff.service.impl;
 
-import com.gymteam.backend.bff.dto.account.AccountDto;
-import com.gymteam.backend.bff.dto.account.CardDto;
-import com.gymteam.backend.bff.dto.account.PaymentCreateRequest;
-import com.gymteam.backend.bff.dto.account.PaymentDto;
+import com.gymteam.backend.bff.dto.account.*;
 import com.gymteam.backend.bff.service.interfaces.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,16 +9,27 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
+
+
     @Override
     public PaymentDto createPayment(PaymentCreateRequest paymentCreateRequest)
     {
         //Test
         PaymentDto payment=new PaymentDto();
         payment.setId(UUID.randomUUID());
-        payment.setFromAccount(paymentCreateRequest.getFromAccount());
         payment.setAmount(paymentCreateRequest.getAmount());
         payment.setFromCard(paymentCreateRequest.getFromCard());
-        payment.setToCard(paymentCreateRequest.getToCard());
+        payment.setType(paymentCreateRequest.getType());
+        if(paymentCreateRequest.getType()== AccountType.USER)
+        {
+            payment.setToCard(paymentCreateRequest.getToCard());
+            payment.setToAccount(null);
+        }
+        if(paymentCreateRequest.getType()== AccountType.ORGANIZATION)
+        {
+            payment.setToCard(null);
+            payment.setToAccount(paymentCreateRequest.getToAccount());
+        }
 
         return payment;
     }
@@ -42,8 +50,12 @@ public class AccountServiceImpl implements AccountService {
         //Test
         AccountDto account=new AccountDto();
         account.setId(id);
-        account.setUserId(UUID.randomUUID());
         account.setNumber("55552500254411224444");
+        account.setType(AccountType.USER);
+        account.setUserId(UUID.randomUUID());
+        account.setOrganizationId(null);
+        account.setBalance(285.99);
+
         return account;
 
     }
