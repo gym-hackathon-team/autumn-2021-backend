@@ -19,20 +19,29 @@ public class Rest {
     private final AccountService accountService;
 
     @PostMapping("/createTransaction")
-    public ResponseEntity<PaymentResultStatus> createUserTransaction(@RequestHeader UUID cardId, @RequestHeader String toCard) {
-
-        return new ResponseEntity<>(accountService.createUserTransaction(cardId, toCard), HttpStatus.OK);
+    public ResponseEntity<PaymentResultStatus> createUserTransaction(@RequestHeader UUID cardId, @RequestHeader String toCard, @RequestHeader Double amount) {
+        try {
+            return new ResponseEntity<>(accountService.createUserTransaction(cardId, toCard, amount), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/createPayment")
-    public ResponseEntity<PaymentResultStatus> createFeePayment(@RequestHeader UUID cardId,@RequestHeader String toAccount) {
-
-        return new ResponseEntity<>(accountService.createFeePayment(cardId, toAccount), HttpStatus.OK);
+    public ResponseEntity<PaymentResultStatus> createFeePayment(@RequestHeader UUID cardId, @RequestHeader String toAccount, @RequestHeader Double amount) {
+        try {
+            return new ResponseEntity<>(accountService.createFeePayment(cardId, toAccount, amount), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/cards")
     public ResponseEntity<List<CardDto>> getUserCards() {
-
-        return new ResponseEntity<>(accountService.getUserCards(), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(accountService.getUserCards(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
