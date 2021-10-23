@@ -20,6 +20,6 @@ public interface AccountClient {
     @RequestMapping(value = "/transaction/organizationStrategy", method = RequestMethod.POST)
     Optional<TransactionDto> createFeePayment(@RequestHeader UUID userId, @RequestHeader UUID cardId, @RequestHeader String toAccount, @RequestHeader Double amount);
 
-    @RequestMapping(value = "/card/", method = RequestMethod.POST)
+    @RequestMapping(value = "/card/", method = RequestMethod.GET)
     List<CardDto> getUserCards(@RequestHeader UUID userId);
 }
