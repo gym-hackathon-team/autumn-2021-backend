@@ -1,19 +1,19 @@
-type Card{
+type Card {
     id:ID!
     balance:Float!
     accountId:ID!
     number:String!
 }
 
-type PaymentResultStatus{
+type PaymentResultStatus {
     status:Boolean!
 }
 
 type Mutation {
-    createUserTransaction(id:ID!,cardId:ID!,toCard:String!):PaymentResultStatus
-    createFeePayment(id:ID!,cardId:ID!,toAccount:String!):PaymentResultStatus
+    createUserTransaction(cardId:ID!,toCard:String!):PaymentResultStatus
+    createFeePayment(cardId:ID!,toAccount:String!):PaymentResultStatus
 }
 
 type Query {
-    getUserCards(id:ID!):[Card]
+    getUserCards:[Card]
 }

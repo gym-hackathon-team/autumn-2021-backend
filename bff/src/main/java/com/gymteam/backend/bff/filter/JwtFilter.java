@@ -1,9 +1,9 @@
 package com.gymteam.backend.bff.filter;
 
 import com.gymteam.backend.bff.client.AuthClient;
+import com.gymteam.backend.bff.config.WebSecurityConfig;
 import com.gymteam.backend.bff.dto.auth.AuthorizedDto;
 import com.gymteam.backend.bff.security.Authorized;
-import com.gymteam.backend.bff.config.WebSecurityConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +29,7 @@ public class JwtFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        /*
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String path = request.getRequestURI().substring(request.getContextPath().length());
 
@@ -42,14 +42,14 @@ public class JwtFilter extends GenericFilterBean {
 
         jwt.ifPresent(token -> {
             Optional<AuthorizedDto> authorization = authClient.authorize(token);
-            authorization.ifPresent(scope -> {
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(new Authorized(scope.getScope()), null, null);
+            authorization.ifPresent(dto -> {
+                Authorized authorized = new Authorized();
+                authorized.setId(dto.getId());
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(authorized, null,  authorized.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             });
         });
 
-
-         */
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
