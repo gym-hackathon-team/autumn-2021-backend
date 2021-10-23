@@ -8,9 +8,9 @@ import java.util.UUID;
 
 public interface AccountService {
 
-    PaymentResultStatus createUserTransaction(UUID cardId, String toCard);
+    PaymentResultStatus createUserTransaction(UUID cardId, String toCard, Double amount);
 
-    PaymentResultStatus createFeePayment(UUID cardId, String toAccount);
+    PaymentResultStatus createFeePayment(UUID cardId, String toAccount, Double amount);
 
     List<CardDto> getUserCards();
 }

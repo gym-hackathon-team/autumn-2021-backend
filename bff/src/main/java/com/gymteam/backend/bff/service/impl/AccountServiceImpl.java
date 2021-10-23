@@ -3,14 +3,15 @@ package com.gymteam.backend.bff.service.impl;
 import com.gymteam.backend.bff.client.AccountClient;
 import com.gymteam.backend.bff.dto.account.CardDto;
 import com.gymteam.backend.bff.dto.account.PaymentResultStatus;
+import com.gymteam.backend.bff.dto.account.TransactionDto;
 import com.gymteam.backend.bff.security.Authorized;
 import com.gymteam.backend.bff.service.interfaces.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -20,40 +21,29 @@ public class AccountServiceImpl implements AccountService {
     private final AccountClient accountClient;
 
     @Override
-    public PaymentResultStatus createUserTransaction(UUID cardId, String toCard) {
+    public PaymentResultStatus createUserTransaction(UUID cardId, String toCard, Double amount) {
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // TODO Get ID from this
 
-        //Test
-        PaymentResultStatus paymentResultStatus = new PaymentResultStatus();
-        paymentResultStatus.setStatus(true);
-        return paymentResultStatus;
+        Optional<TransactionDto> transaction = accountClient.createUserTransaction(authorized.getId(), cardId, toCard, amount);
+        PaymentResultStatus response = new PaymentResultStatus();
+        response.setStatus(transaction.isPresent());
+        return response;
     }
 
     @Override
-    public PaymentResultStatus createFeePayment(UUID cardId, String toAccount) {
+    public PaymentResultStatus createFeePayment(UUID cardId, String toAccount, Double amount) {
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // TODO Get ID from this
 
-        //Test
-        PaymentResultStatus paymentResultStatus = new PaymentResultStatus();
-        paymentResultStatus.setStatus(true);
-        return paymentResultStatus;
+        Optional<TransactionDto> transaction = accountClient.createFeePayment(authorized.getId(), cardId, toAccount, amount);
+        PaymentResultStatus response = new PaymentResultStatus();
+        response.setStatus(transaction.isPresent());
+        return response;
     }
 
     @Override
     public List<CardDto> getUserCards() {
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        // TODO Get ID from this
 
-        //Test
-        CardDto card = new CardDto();
-        card.setId(UUID.randomUUID());
-        card.setBalance(65477.29);
-        card.setAccountId(UUID.randomUUID());
-        card.setNumber("4274254425441122");
-        List<CardDto> cards = new ArrayList<>();
-        cards.add(card);
-        return cards;
+        return accountClient.getUserCards(authorized.getId());
     }
 }
