@@ -39,16 +39,32 @@ type Payment{
 
 }
 
-type Mutation {
-    updateUser(id: ID!, email: String, password: String, firstName: String, lastName: String): User
+type PaymentResultStatus{
+    status:Boolean
+}
 
-    createPayment(amount:Float,fromCard:ID,type:AccountType,toCard:ID,toAccount:ID):Payment
+type Mutation {
+    #updateUser(id: ID!, email: String, password: String, firstName: String, lastName: String): User
+
+    #createPayment(amount:Float,fromCard:ID,type:AccountType,toCard:ID,toAccount:ID):Payment
+
+
+
+    createUserTransaction(id:ID,cardId:ID,toCard:String):PaymentResultStatus
+
+    createFeePayment(id:ID,cardId:ID,toAccount:ID):PaymentResultStatus
 }
 
 type Query {
-    getUser(id: ID): User
+    #getUser(id: ID): User
 
-    getCard(id:ID):Card
+    #getCard(id:ID):Card
 
-    getAccount(id:ID):Account
+    #getAccount(id:ID):Account
+
+
+
+    getUserCards(id:ID):[Card]
+
+
 }
