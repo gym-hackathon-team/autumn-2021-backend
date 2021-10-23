@@ -11,7 +11,7 @@ type PaymentResultStatus{
 
 type Mutation {
     createUserTransaction(id:ID!,cardId:ID!,toCard:String!):PaymentResultStatus
-    createFeePayment(id:ID!,cardId:ID!,toAccount:ID!):PaymentResultStatus
+    createFeePayment(id:ID!,cardId:ID!,toAccount:String!):PaymentResultStatus
 }
 
 type Query {
