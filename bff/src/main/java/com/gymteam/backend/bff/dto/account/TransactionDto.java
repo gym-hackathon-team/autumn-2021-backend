@@ -7,12 +7,17 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class PaymentDto {
-    private UUID id;
-    private double amount;
-    private UUID fromCard;
-    private AccountType type;
-    private UUID toCard;
-    private UUID toAccount;
+public class TransactionDto {
 
+    private UUID id;
+
+    private Double amount;
+
+    private UUID fromCard;
+
+    private StrategyType type;
+
+    private UUID toCard;
+
+    private UUID toOrganization;
 }

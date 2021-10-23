@@ -1,6 +1,6 @@
 package com.gymteam.backend.bff.dto.account;
 
-public enum AccountType {
+public enum StrategyType {
     USER,
     ORGANIZATION
 }
