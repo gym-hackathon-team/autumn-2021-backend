@@ -1,59 +1,89 @@
-import json
-import wave
-import numpy as np
 import vosk
-import asyncio
+import json
+import shutil
+import subprocess
+import re
+import numpy as np
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route
 
 vosk.SetLogLevel(-2)
 sample_rate = 16000
-model = vosk.Model("model")
-spk_model = vosk.SpkModel("model-spk")
+model = vosk.Model('model')
+spk_model = vosk.SpkModel('model-spk')
 rec = vosk.KaldiRecognizer(model, sample_rate, spk_model)
 
 
+def process_model_result(result_str):
+    result = json.loads(result_str)
+    try:
+        text = result['text']
+        if len(text) == 0:
+            return None, None, None
+
+        try:
+            processed_frames = result['spk_frames']
+        except KeyError:
+            processed_frames = 0
+
+        try:
+            speaker = np.array(result['spk']) * processed_frames
+        except KeyError:
+            return None, None, None
+
+        return text, processed_frames, speaker
+    except KeyError:
+        return None, None, None
+
+
+def update_values(text, frames, speaker, result_string):
+    new_text, new_frames, new_speaker = process_model_result(result_string)
+    if new_text is None or new_frames is None or new_speaker is None:
+        return text, frames, speaker
+    else:
+        text = text + ' ' + new_text
+        frames += new_frames
+
+        if speaker is None:
+            speaker = new_speaker
+        else:
+            speaker += new_speaker
+        return text, frames, speaker
+
+
 async def recognize(request):
-    await asyncio.sleep(3)
     try:
         form = await request.form()
-        wf = wave.open(form["upload_file"].file, "rb")
-        data = ' '
+        filename = form['upload_file'].filename
+        with open(filename, 'wb') as f:
+            shutil.copyfileobj(form['upload_file'].file, f)
+
         text = ''
+        frames = 0
         speaker = None
-        total_frames = 0
+
+        process = subprocess.Popen(
+            ['ffmpeg', '-loglevel', 'quiet', '-i', filename, '-ar', str(sample_rate), '-ac', '1', '-f', 's16le', '-'],
+            stdout=subprocess.PIPE)
+        data = ' '
+
         while len(data) > 0:
-            data = wf.readframes(4000)
+            data = process.stdout.read(4000)
             if rec.AcceptWaveform(data):
-                res = json.loads(rec.Result())
-                try:
-                    txt = res['text']
-                    if len(txt) > 0:
-                        frames = 0
-                        try:
-                            frames = res['spk_frames']
-                        except KeyError:
-                            pass
-                        try:
-                            spk = res['spk']
-                            if speaker is None:
-                                speaker = np.array(spk) * frames
-                            else:
-                                speaker += np.array(spk) * frames
-                        except KeyError:
-                            pass
-                        total_frames += frames
-                        text = (text + ' ' + txt).strip()
-                except KeyError:
-                    pass
-        if speaker is None or total_frames == 0 or len(text) == 0:
-            return JSONResponse({'recognized': False, 'reason': 'unknown'}, status_code=500)
+                text, frames, speaker = update_values(text, frames, speaker, rec.Result())
+
+        text, frames, speaker = update_values(text, frames, speaker, rec.FinalResult())
+
+        if len(text) == 0 or frames == 0 or speaker is None:
+            print('Unable to recognize speech, reason unknown')
+            return JSONResponse({}, status_code=500)
         else:
-            return JSONResponse({'recognized': True, 'text': text, 'speaker': (speaker / total_frames).tolist()},
-                                status_code=200)
+            return JSONResponse({'success': True, 'text': re.sub('\\[unk]', '', re.sub(' +', ' ', text)),
+                                 'speaker': (speaker / frames).tolist()}, status_code=200)
     except BaseException as err:
-        return JSONResponse({'recognized': False, 'reason': str(err)}, status_code=500)
+        print('Unexpected exception occurred: {}'.format(str(err)))
+        return JSONResponse({}, status_code=500)
 
 
 app = Starlette(routes=[
