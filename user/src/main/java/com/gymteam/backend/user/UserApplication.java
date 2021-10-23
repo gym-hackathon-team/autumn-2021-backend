@@ -24,5 +24,4 @@ public class UserApplication {
         String message = "Still alive";
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
-
 }

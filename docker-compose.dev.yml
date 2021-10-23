@@ -19,6 +19,18 @@ services:
     volumes:
       - postgres-data:${DATASOURCE_VOLUME}
 
+  recognizer:
+    image: "${RECOGNIZER_SERVICE_IMAGE_NAME}:${RECOGNIZER_SERVICE_IMAGE_TAG}"
+    container_name: recognizer
+    build:
+      context: recognizer
+    ports:
+      - "8088:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 900M
+
   bff:
     image: "${BFF_SERVICE_IMAGE_NAME}:${BFF_SERVICE_IMAGE_TAG}"
     container_name: bff
@@ -98,17 +110,25 @@ services:
       - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
-  recognizer:
-    image: "${RECOGNIZER_SERVICE_IMAGE_NAME}:${RECOGNIZER_SERVICE_IMAGE_TAG}"
-    container_name: recognizer
+  organization:
+    image: "${ORGANIZATION_SERVICE_IMAGE_NAME}:${ORGANIZATION_SERVICE_IMAGE_TAG}"
+    container_name: user
     build:
-      context: recognizer
+      context: user
+    depends_on:
+      - consul
+      - database
     ports:
-      - "8088:8080"
-    deploy:
-      resources:
-        limits:
-          memory: 900M
+      - "8077:8080"
+    environment:
+      - SPRING_APPLICATION_PORT=8080
+      - SPRING_CONSUL_HOST=consul
+      - SPRING_CONSUL_PORT=8500
+
+      - SPRING_DATASOURCE_URL=${ORGANIZATION_SERVICE_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
 volumes:
   postgres-data:

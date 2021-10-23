@@ -1,4 +1,4 @@
-package com.gymteam.backend.auth;
+package com.gymteam.backend.organization;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableDiscoveryClient
 @EnableFeignClients
 @RestController
-public class AuthApplication {
+public class OrganizationApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthApplication.class, args);
+        SpringApplication.run(OrganizationApplication.class, args);
     }
 
     @GetMapping("/my-health-check")
