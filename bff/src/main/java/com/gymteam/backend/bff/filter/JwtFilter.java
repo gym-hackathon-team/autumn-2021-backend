@@ -44,7 +44,7 @@ public class JwtFilter extends GenericFilterBean {
             Optional<AuthorizedDto> authorization = authClient.authorize(token);
             authorization.ifPresent(dto -> {
                 Authorized authorized = new Authorized();
-                authorized.setId(dto.getId());
+                authorized.setId(dto.getUuid());
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(authorized, null,  authorized.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             });

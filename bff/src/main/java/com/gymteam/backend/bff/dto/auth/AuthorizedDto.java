@@ -9,5 +9,5 @@ import java.util.UUID;
 @Setter
 public class AuthorizedDto {
 
-    private UUID id;
+    private UUID uuid;
 }

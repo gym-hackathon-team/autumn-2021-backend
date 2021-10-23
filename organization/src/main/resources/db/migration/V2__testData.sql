@@ -1,29 +1,6 @@
 INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 1', gen_random_uuid());
+VALUES ('Flex Company 11', 'cfa9254a-3418-11ec-8d3d-0242ac130003');
 
 INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 2', gen_random_uuid());
+VALUES ('Flex Company 22', 'cfa92770-3418-11ec-8d3d-0242ac130003');
 
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 3', gen_random_uuid());
-
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 4', gen_random_uuid());
-
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 5', gen_random_uuid());
-
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 6', gen_random_uuid());
-
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 7', gen_random_uuid());
-
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 8', gen_random_uuid());
-
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 9', gen_random_uuid());
-
-INSERT INTO ORGANIZATIONS (NAME, ID)
-VALUES ('Flex Company 10', gen_random_uuid());
