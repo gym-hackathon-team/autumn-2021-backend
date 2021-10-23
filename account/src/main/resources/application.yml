@@ -1,0 +1,37 @@
+server:
+  port: ${SPRING_APPLICATION_PORT}
+spring:
+  application:
+    name: account-service
+  cloud:
+    discovery:
+      enabled: true
+    consul:
+      host: ${SPRING_CONSUL_HOST}
+      port: ${SPRING_CONSUL_PORT}
+      discovery:
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}
+        healthCheckPath: /my-health-check
+        healthCheckInterval: 20s
+      config:
+        enabled: false
+    loadbalancer:
+      cache:
+        enabled: false
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: false
+    generate-ddl: false
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driverClassName: org.postgresql.Driver
+  flyway:
+    url: ${SPRING_DATASOURCE_URL}
+    user: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    schemas: public

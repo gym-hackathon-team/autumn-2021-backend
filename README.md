@@ -21,6 +21,11 @@
 - USER_SERVICE_DATASOURCE_URL - jdbc-ссылка на БД user-service с учётом адресации внутри docker network
 
 
+- USER_SERVICE_IMAGE_NAME - имя docker-image для account-сервиса
+- USER_SERVICE_IMAGE_TAG - тег docker-image для account-сервиса
+- USER_SERVICE_DATASOURCE_URL - jdbc-ссылка на БД account-service с учётом адресации внутри docker network
+
+
 - DATASOURCE_USERNAME - имя пользователя database-сервиса
 - DATASOURCE_PASSWORD - пароль пользователя database-сервиса
 - DATASOURCE_VOLUME - docker volume для database-сервиса
