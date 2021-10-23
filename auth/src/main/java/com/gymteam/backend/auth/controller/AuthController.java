@@ -30,7 +30,7 @@ public class AuthController {
         try {
             UserDto user = userService.getUserByEmailAndPassword(request);
             Token token = tokenService.create(user);
-            TokenDto tokenDto = new TokenDto(token.getValue());
+            TokenDto tokenDto = new TokenDto(user.getId(),token.getValue());
             return new ResponseEntity<>(tokenDto, HttpStatus.OK);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
