@@ -1,18 +1,16 @@
 package com.gymteam.backend.bff.controller;
 
-import com.gymteam.backend.bff.dto.account.CardDto;
-import com.gymteam.backend.bff.dto.account.PaymentResultStatus;
 import com.gymteam.backend.bff.dto.client.VoiceCommandResponse;
 import com.gymteam.backend.bff.exception.VoiceNotRegisteredException;
 import com.gymteam.backend.bff.service.interfaces.AccountService;
 import com.gymteam.backend.bff.service.interfaces.VoiceService;
+import feign.FeignException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
