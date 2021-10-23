@@ -7,16 +7,10 @@ import java.util.UUID;
 
 public interface AccountService {
 
-    public PaymentDto createPayment(PaymentCreateRequest paymentCreateRequest);
 
-    public CardDto getCard(UUID id);
+    PaymentResultStatus createUserTransaction(UUID id,UUID cardId,String toCard);
 
-    public AccountDto getAccount(UUID id);
+    PaymentResultStatus createFeePayment(UUID id,UUID cardId,UUID toAccount);
 
-
-    public PaymentResultStatus createUserTransaction(UUID id,UUID cardId,String toCard);
-
-    public PaymentResultStatus createFeePayment(UUID id,UUID cardId,UUID toAccount);
-
-    public List<CardDto> getUserCards(UUID id);
+    List<CardDto> getUserCards(UUID id);
 }

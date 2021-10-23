@@ -16,10 +16,5 @@ public class AccountQuery implements GraphQLQueryResolver {
 
     private final AccountService accountService;
 
-    public CardDto getCard(UUID id) {return accountService.getCard(id);}
-
-    public AccountDto getAccount(UUID id) {return accountService.getAccount(id);}
-
-
     public List<CardDto> getUserCards(UUID id){return accountService.getUserCards(id);}
 }

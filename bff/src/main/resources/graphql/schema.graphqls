@@ -1,70 +1,19 @@
-type User {
-    id: ID!
-    email: String
-    password: String
-    firstName: String
-    lastName: String
-}
-
-
-
 type Card{
     id:ID!
-    balance:Float
-    accountId:ID
-    number:String
-}
-
-enum AccountType {
-    USER
-    ORGANIZATION
-}
-
-type Account{
-    id:ID!
-    number:String
-    type:AccountType
-    userId:ID
-    organizationId:ID
-    balance:Float
-}
-
-type Payment{
-    id:ID!
-    amount:Float
-    fromCard:ID
-    type:AccountType
-    toCard:ID
-    toAccount:ID
-
+    balance:Float!
+    accountId:ID!
+    number:String!
 }
 
 type PaymentResultStatus{
-    status:Boolean
+    status:Boolean!
 }
 
 type Mutation {
-    #updateUser(id: ID!, email: String, password: String, firstName: String, lastName: String): User
-
-    #createPayment(amount:Float,fromCard:ID,type:AccountType,toCard:ID,toAccount:ID):Payment
-
-
-
-    createUserTransaction(id:ID,cardId:ID,toCard:String):PaymentResultStatus
-
-    createFeePayment(id:ID,cardId:ID,toAccount:ID):PaymentResultStatus
+    createUserTransaction(id:ID!,cardId:ID!,toCard:String!):PaymentResultStatus
+    createFeePayment(id:ID!,cardId:ID!,toAccount:ID!):PaymentResultStatus
 }
 
 type Query {
-    #getUser(id: ID): User
-
-    #getCard(id:ID):Card
-
-    #getAccount(id:ID):Account
-
-
-
-    getUserCards(id:ID):[Card]
-
-
+    getUserCards(id:ID!):[Card]
 }

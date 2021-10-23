@@ -17,21 +17,6 @@ public class AccountMutation implements GraphQLMutationResolver {
 
     private final AccountService accountService;
 
-    public PaymentDto createPayment(double amount, UUID fromCard, AccountType type,UUID toCard, UUID toAccount)
-    {
-        PaymentCreateRequest paymentCreateRequest=new PaymentCreateRequest();
-        paymentCreateRequest.setAmount(amount);
-        paymentCreateRequest.setFromCard(fromCard);
-        paymentCreateRequest.setType(type);
-        paymentCreateRequest.setToCard(toCard);
-        paymentCreateRequest.setToAccount(toAccount);
-
-
-        return accountService.createPayment(paymentCreateRequest);
-    }
-
-
-
     public PaymentResultStatus createUserTransaction(UUID id,UUID cardId,String toCard)
     {return accountService.createUserTransaction(id,cardId,toCard);}
 
