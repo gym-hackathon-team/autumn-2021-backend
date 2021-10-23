@@ -29,6 +29,7 @@ public class JwtFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        /*
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String path = request.getRequestURI().substring(request.getContextPath().length());
 
@@ -47,6 +48,8 @@ public class JwtFilter extends GenericFilterBean {
             });
         });
 
+
+         */
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

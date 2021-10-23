@@ -13,6 +13,5 @@ public interface UserClient {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     UserDto getUserByEmailAndPassword(@RequestHeader String login, @RequestHeader String password);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    UserDto createUser(@RequestBody UserDto userDto);
+
 }
