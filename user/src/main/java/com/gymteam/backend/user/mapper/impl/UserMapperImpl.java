@@ -16,6 +16,7 @@ public class UserMapperImpl implements UserMapper {
         entity.setPassword(dto.getPassword());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
+        entity.setVoiceId(dto.getVoiceId());
         return entity;
     }
 
@@ -27,6 +28,7 @@ public class UserMapperImpl implements UserMapper {
         dto.setPassword(entity.getPassword());
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
+        dto.setVoiceId(entity.getVoiceId());
         return dto;
     }
 }

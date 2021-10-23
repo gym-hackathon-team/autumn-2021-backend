@@ -15,6 +15,7 @@ public class UserServiceUserBFFMapperImpl implements UserServiceUserBffMapper {
         fromUserService.setPassword(fromBff.getPassword());
         fromUserService.setFirstName(fromBff.getFirstName());
         fromUserService.setLastName(fromBff.getLastName());
+        fromUserService.setVoiceId(fromBff.getVoiceId());
         return fromUserService;
     }
 
@@ -26,6 +27,7 @@ public class UserServiceUserBFFMapperImpl implements UserServiceUserBffMapper {
         fromBff.setPassword(fromUserService.getPassword());
         fromBff.setFirstName(fromUserService.getFirstName());
         fromBff.setLastName(fromUserService.getLastName());
+        fromBff.setVoiceId(fromUserService.getVoiceId());
         return fromBff;
     }
 }
