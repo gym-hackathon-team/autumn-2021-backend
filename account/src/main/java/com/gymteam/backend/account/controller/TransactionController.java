@@ -1,6 +1,7 @@
 package com.gymteam.backend.account.controller;
 
 import com.gymteam.backend.account.dto.bff.TransactionDto;
+import com.gymteam.backend.account.exception.NotFoundException;
 import com.gymteam.backend.account.mapper.interfaces.TransactionDtoMapper;
 import com.gymteam.backend.account.service.interfaces.TransactionService;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,8 @@ public class TransactionController {
     public ResponseEntity<TransactionDto> createUserTransaction(@RequestHeader UUID userId, @RequestHeader UUID cardId, @RequestHeader String toCard, @RequestHeader Double amount) {
         try {
             return new ResponseEntity<>(mapper.convertToDto(transactionService.createUserTransaction(userId, cardId, toCard, amount)), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -35,6 +38,8 @@ public class TransactionController {
     public ResponseEntity<TransactionDto> createFeePayment(@RequestHeader UUID userId, @RequestHeader UUID cardId, @RequestHeader String toAccount, @RequestHeader Double amount) {
         try {
             return new ResponseEntity<>(mapper.convertToDto(transactionService.createOrganizationTransaction(userId, cardId, toAccount, amount)), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

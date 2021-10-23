@@ -4,6 +4,7 @@ import com.gymteam.backend.account.entity.Account;
 import com.gymteam.backend.account.entity.Card;
 import com.gymteam.backend.account.entity.StrategyType;
 import com.gymteam.backend.account.entity.Transaction;
+import com.gymteam.backend.account.exception.NotFoundException;
 import com.gymteam.backend.account.repository.AccountRepository;
 import com.gymteam.backend.account.repository.CardRepository;
 import com.gymteam.backend.account.repository.TransactionRepository;
@@ -27,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional // TODO Check this
-    public Transaction createUserTransaction(UUID userId, UUID cardId, String toCard, Double amount) {
+    public Transaction createUserTransaction(UUID userId, UUID cardId, String toCard, Double amount) throws NotFoundException {
         Optional<Card> userCardOptional = cardRepository.findById(cardId);
         Optional<Card> destinationCardOptional = cardRepository.findCardByNumber(toCard);
 
@@ -50,12 +51,14 @@ public class TransactionServiceImpl implements TransactionService {
 
             return transactionRepository.save(transaction);
         }
-        return null;
+        else {
+            throw new NotFoundException();
+        }
     }
 
     @Override
     @Transactional
-    public Transaction createOrganizationTransaction(UUID userId, UUID cardId, String toAccount, Double amount) {
+    public Transaction createOrganizationTransaction(UUID userId, UUID cardId, String toAccount, Double amount) throws NotFoundException {
         Optional<Card> userCardOptional = cardRepository.findById(cardId);
         Optional<Account> destinationAccountOptional = accountRepository.findAccountByNumber(toAccount);
 
@@ -78,6 +81,8 @@ public class TransactionServiceImpl implements TransactionService {
 
             return transactionRepository.save(transaction);
         }
-        return null;
+        else {
+            throw new NotFoundException();
+        }
     }
 }
