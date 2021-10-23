@@ -1,17 +1,16 @@
 package com.gymteam.backend.bff.service.interfaces;
 
-import com.gymteam.backend.bff.dto.account.AccountDto;
-import com.gymteam.backend.bff.dto.account.CardDto;
-import com.gymteam.backend.bff.dto.account.PaymentCreateRequest;
-import com.gymteam.backend.bff.dto.account.PaymentDto;
+import com.gymteam.backend.bff.dto.account.*;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface AccountService {
 
-    public PaymentDto createPayment(PaymentCreateRequest paymentCreateRequest);
 
-    public CardDto getCard(UUID id);
+    PaymentResultStatus createUserTransaction(UUID id,UUID cardId,String toCard);
 
-    public AccountDto getAccount(UUID id);
+    PaymentResultStatus createFeePayment(UUID id,UUID cardId,UUID toAccount);
+
+    List<CardDto> getUserCards(UUID id);
 }
