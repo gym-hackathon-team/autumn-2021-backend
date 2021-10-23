@@ -33,7 +33,7 @@ public class TokenController {
             if (token.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             } else {
-                return new ResponseEntity<>(new AuthorizedDto(token.get().getScope()), HttpStatus.OK);
+                return new ResponseEntity<>(new AuthorizedDto(token.get().getEntityId()), HttpStatus.OK);
             }
         }
 

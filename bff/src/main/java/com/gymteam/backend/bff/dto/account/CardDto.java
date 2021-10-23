@@ -10,7 +10,10 @@ import java.util.UUID;
 public class CardDto {
 
     private UUID id;
+
     private double balance;
+
     private UUID accountId;
+
     private String number;
 }
