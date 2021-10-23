@@ -22,7 +22,7 @@ public class Rest {
     }
 
     @PostMapping("/createPayment")
-    public PaymentResultStatus createFeePayment(UUID cardId, String toAccount) {
+    public PaymentResultStatus createFeePayment(@RequestHeader UUID cardId,@RequestHeader String toAccount) {
         return accountService.createFeePayment(cardId, toAccount);
     }
 
