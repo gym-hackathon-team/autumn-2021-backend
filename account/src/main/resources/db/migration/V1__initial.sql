@@ -1,27 +1,28 @@
-CREATE TABLE ACCOUNTS
+create table accounts
 (
-    ID              UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    NUMBER          VARCHAR(20) NOT NULL,
-    TYPE            VARCHAR(255), /* TODO ENUM USER/ORGANIZATION this */
-    USER_ID         UUID, /* TODO Nullable check */ /* null if type = organization */
-    ORGANIZATION_ID UUID, /* TODO Nullable check */ /* null if type = user */
-    BALANCE         FLOAT /* TODO Nullable check */ /* null if type = user */
+    id              uuid         not null,
+    balance         float8, /* null if type = user */
+    number          varchar(255) not null,
+    type            varchar(255),
+    organization_id uuid, /* null if type = user */
+    user_id         uuid, /* null if type = organization */
+    primary key (id)
 );
-
-CREATE TABLE CARDS
+create table cards
 (
-    ID         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    NUMBER     VARCHAR(16) NOT NULL,
-    BALANCE    FLOAT       NOT NULL,
-    ACCOUNT_ID UUID        NOT NULL
+    id         uuid         not null,
+    account_id uuid         not null,
+    balance    float8       not null,
+    number     varchar(255) not null,
+    primary key (id)
 );
-
-CREATE TABLE PAYMENTS
+create table transactions
 (
-    ID         UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    AMOUNT     FLOAT NOT NULL,
-    FROM_CARD  UUID  NOT NULL,
-    TYPE       VARCHAR(255), /* TODO ENUM USER/ORGANIZATION This */
-    TO_CARD    UUID, /* TODO Nullable check */ /* null if type = organization */
-    TO_ACCOUNT UUID /* TODO Nullable check */ /* null if type = user */
+    id              uuid   not null,
+    amount          float8 not null,
+    from_card       uuid   not null,
+    to_card         uuid, /* null if type = organization */
+    to_organization uuid, /* null if type = user */
+    type            varchar(255),
+    primary key (id)
 );
