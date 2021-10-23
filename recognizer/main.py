@@ -47,8 +47,11 @@ async def recognize(request):
                         text = (text + ' ' + txt).strip()
                 except KeyError:
                     pass
-        return JSONResponse({'recognized': True, 'text': text, 'speaker': (speaker / total_frames).tolist()},
-                            status_code=200)
+        if speaker is None or total_frames == 0 or len(text) == 0:
+            return JSONResponse({'recognized': False, 'reason': 'unknown'}, status_code=500)
+        else:
+            return JSONResponse({'recognized': True, 'text': text, 'speaker': (speaker / total_frames).tolist()},
+                                status_code=200)
     except BaseException as err:
         return JSONResponse({'recognized': False, 'reason': str(err)}, status_code=500)
 

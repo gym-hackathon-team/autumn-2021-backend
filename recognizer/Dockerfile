@@ -5,4 +5,4 @@ RUN pip install vosk gunicorn uvicorn numpy starlette python-multipart python-ff
 COPY main.py ./
 COPY model ./model
 COPY model-spk ./model-spk
-CMD gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 main:app
+CMD gunicorn -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8080 main:app
