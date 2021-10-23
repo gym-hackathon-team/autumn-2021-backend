@@ -98,5 +98,17 @@ services:
         limits:
           memory: 300M
 
+  recognizer:
+    image: "${RECOGNIZER_SERVICE_IMAGE_NAME}:${RECOGNIZER_SERVICE_IMAGE_TAG}"
+    container_name: recognizer
+    build:
+      context: recognizer
+    ports:
+      - "8076:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 900M
+
 volumes:
   postgres-data:
