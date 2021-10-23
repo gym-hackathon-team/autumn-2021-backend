@@ -19,6 +19,18 @@ services:
     volumes:
       - postgres-data:${DATASOURCE_VOLUME}
 
+  recognizer:
+    image: "${RECOGNIZER_SERVICE_IMAGE_NAME}:${RECOGNIZER_SERVICE_IMAGE_TAG}"
+    container_name: recognizer
+    build:
+      context: recognizer
+    ports:
+      - "8088:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 900M
+
   bff:
     image: "${BFF_SERVICE_IMAGE_NAME}:${BFF_SERVICE_IMAGE_TAG}"
     container_name: bff
@@ -26,8 +38,6 @@ services:
       context: bff
     depends_on:
       - consul
-      - auth
-      - user
     ports:
       - "8079:8080"
     environment:
@@ -45,7 +55,7 @@ services:
       context: auth
     depends_on:
       - consul
-      - user
+      - database
     ports:
       - "8078:8080"
     environment:
@@ -80,35 +90,43 @@ services:
 
   account:
     image: "${ACCOUNT_SERVICE_IMAGE_NAME}:${ACCOUNT_SERVICE_IMAGE_TAG}"
-    container_name: user
+    container_name: account
     build:
-      context: user
+      context: account
     depends_on:
       - consul
       - database
     ports:
-      - "8077:8080"
+      - "8076:8080"
     environment:
       - SPRING_APPLICATION_PORT=8080
       - SPRING_CONSUL_HOST=consul
       - SPRING_CONSUL_PORT=8500
 
-      - SPRING_DATASOURCE_URL=${AUTH_SERVICE_DATASOURCE_URL}
+      - SPRING_DATASOURCE_URL=${ACCOUNT_SERVICE_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
-  recognizer:
-    image: "${RECOGNIZER_SERVICE_IMAGE_NAME}:${RECOGNIZER_SERVICE_IMAGE_TAG}"
-    container_name: recognizer
+  organization:
+    image: "${ORGANIZATION_SERVICE_IMAGE_NAME}:${ORGANIZATION_SERVICE_IMAGE_TAG}"
+    container_name: organization
     build:
-      context: recognizer
+      context: organization
+    depends_on:
+      - consul
+      - database
     ports:
-      - "8088:8080"
-    deploy:
-      resources:
-        limits:
-          memory: 900M
+      - "8075:8080"
+    environment:
+      - SPRING_APPLICATION_PORT=8080
+      - SPRING_CONSUL_HOST=consul
+      - SPRING_CONSUL_PORT=8500
+
+      - SPRING_DATASOURCE_URL=${ORGANIZATION_SERVICE_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
 
 volumes:
   postgres-data:
