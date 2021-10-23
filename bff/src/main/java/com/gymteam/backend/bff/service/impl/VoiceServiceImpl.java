@@ -23,6 +23,7 @@ public class VoiceServiceImpl implements VoiceService {
         // TODO Validate voice here
 
         VoiceCommandResponse response = new VoiceCommandResponse();
+        response.setDecision(true);
         response.setVoiceCommand(VoiceCommand.ORGANIZATION_PAYMENT);
         return response;
     }
