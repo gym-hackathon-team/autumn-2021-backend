@@ -4,11 +4,18 @@ import com.gymteam.backend.bff.client.RecognizerClient;
 import com.gymteam.backend.bff.client.UserClient;
 import com.gymteam.backend.bff.dto.client.VoiceCommand;
 import com.gymteam.backend.bff.dto.client.VoiceCommandResponse;
+import com.gymteam.backend.bff.dto.recognize.RecognizedVoiceDto;
+import com.gymteam.backend.bff.dto.user.UserDto;
+import com.gymteam.backend.bff.exception.VoiceNotMatchingException;
 import com.gymteam.backend.bff.exception.VoiceNotRegisteredException;
+import com.gymteam.backend.bff.security.Authorized;
 import com.gymteam.backend.bff.service.interfaces.VoiceService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +26,18 @@ public class VoiceServiceImpl implements VoiceService {
     public UserClient userClient;
 
     @Override
-    public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) {
-        // TODO Validate voice here
+    public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException {
+        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart);
+
+        Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
+
+        if (!Objects.equals(user.getVoiceId(), recognized.getVoiceId())) {
+            throw new VoiceNotMatchingException();
+        }
+
+        String[] words = recognized.getWords().split(" ");
+        // TODO Math recognized.getWords with enum
 
         VoiceCommandResponse response = new VoiceCommandResponse();
         response.setDecision(true);
@@ -30,6 +47,16 @@ public class VoiceServiceImpl implements VoiceService {
 
     @Override
     public void registerUserVoice(MultipartFile multipartFile) throws VoiceNotRegisteredException {
-        // TODO Update voice_id here
+        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile);
+
+        Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
+
+        user.setVoiceId(recognized.getVoiceId());
+        try {
+            userClient.updateUser(user);
+        } catch (Exception e) {
+            throw new VoiceNotRegisteredException();
+        }
     }
 }

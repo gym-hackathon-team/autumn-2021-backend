@@ -46,6 +46,15 @@ public class UserServiceImpl implements UserService {
         if (user.getPassword() == null) {
             user.setPassword(existing.getPassword());
         }
+        if (user.getVoiceId() == null) {
+            user.setVoiceId(existing.getVoiceId());
+        }
+        if (user.getFirstName() == null) {
+            user.setFirstName(existing.getFirstName());
+        }
+        if (user.getLastName() == null) {
+            user.setLastName(existing.getLastName());
+        }
         userRepository.save(user);
         return user;
     }
