@@ -1,18 +1,26 @@
+import pathlib
+
 import vosk
 import json
 import shutil
 import subprocess
 import re
+import consul
 import numpy as np
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, PlainTextResponse
 from starlette.routing import Route
+
+import clusterize
 
 vosk.SetLogLevel(-2)
 sample_rate = 16000
 model = vosk.Model('model')
 spk_model = vosk.SpkModel('model-spk')
-rec = vosk.KaldiRecognizer(model, sample_rate, spk_model)
+dictionary = 'перевести пользователю оплатить услугу'
+speaker_model = vosk.KaldiRecognizer(model, sample_rate, '["{}", "[unk]"]'.format(dictionary))
+speaker_model.SetSpkModel(spk_model)
+clusters = clusterize.Clusters(pathlib.Path('/data'))
 
 
 def process_model_result(result_str):
@@ -77,15 +85,22 @@ async def recognize(request):
 
         if len(text) == 0 or frames == 0 or speaker is None:
             print('Unable to recognize speech, reason unknown')
-            return JSONResponse({}, status_code=500)
+            return PlainTextResponse('', status_code=500)
         else:
-            return JSONResponse({'success': True, 'text': re.sub('\\[unk]', '', re.sub(' +', ' ', text)),
-                                 'speaker': (speaker / frames).tolist()}, status_code=200)
+            voice_id = clusters.recognize(speaker / frames)
+            text = re.sub(' +', ' ', text)
+            text = re.sub('\\[unk]', '', text)
+            text = text.strip()
+            print('Recognized text: "{}"'.format(text))
+            return JSONResponse({'words': text, 'voiceId': str(voice_id)}, status_code=200)
     except BaseException as err:
         print('Unexpected exception occurred: {}'.format(str(err)))
-        return JSONResponse({}, status_code=500)
+        return PlainTextResponse('', status_code=500)
 
 
 app = Starlette(routes=[
     Route('/recognize', recognize, methods=["POST"])
 ])
+
+consul_client = consul.Consul('consul')
+consul_client.agent.service.register(name='recognizer-service', port=8080, check=consul.Check.http())
