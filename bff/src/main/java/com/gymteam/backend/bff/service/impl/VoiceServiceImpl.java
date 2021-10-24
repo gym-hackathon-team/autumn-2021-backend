@@ -27,6 +27,13 @@ public class VoiceServiceImpl implements VoiceService {
 
     @Override
     public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException {
+
+        VoiceCommandResponse response=new VoiceCommandResponse();
+        response.setVoiceCommand(VoiceCommand.USER_TRANSACTION);
+        response.setDecision(true);
+
+        return response;
+        /*
         RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart);
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -43,11 +50,19 @@ public class VoiceServiceImpl implements VoiceService {
         response.setDecision(true);
         response.setVoiceCommand(VoiceCommand.ORGANIZATION_PAYMENT);
         return response;
+
+         */
     }
 
     @Override
     public void registerUserVoice(MultipartFile multipartFile) throws VoiceNotRegisteredException {
-        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile);
+
+
+        //RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile);
+        RecognizedVoiceDto recognized = new RecognizedVoiceDto();
+        recognized.setWords("окей абоба перевод пользователю андрей");
+        double randId=Math.random() * 10;
+        recognized.setVoiceId(Double.toString(randId));
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
