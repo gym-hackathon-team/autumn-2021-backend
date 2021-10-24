@@ -85,7 +85,7 @@ public class Rest {
         try {
             voiceService.registerUserVoice(multipart);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (VoiceNotRegisteredException e) {
+        } catch (VoiceNotRegisteredException, UnknownVoiceCommandException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
