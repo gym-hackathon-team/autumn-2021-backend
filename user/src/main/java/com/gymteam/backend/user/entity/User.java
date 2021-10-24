@@ -29,6 +29,6 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "voice_id")
+    @Column(name = "voice_id", unique = true)
     private String voiceId;
 }
