@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.Base64;
+
 @FeignClient(name = "recognizer-service")
 public interface RecognizerClient {
 
     @RequestMapping(value = "/recognize", method = RequestMethod.POST)
-    RecognizedVoiceDto analyzeVoice(@RequestParam("upload_file") MultipartFile upload_file); // TODO File variable type
+    RecognizedVoiceDto analyzeVoice(@RequestParam("upload_file") String upload_file); // TODO File variable type
 }
