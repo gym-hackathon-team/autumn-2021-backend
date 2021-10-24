@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import re
 import consul
+import socket
 import numpy as np
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse, PlainTextResponse
@@ -85,7 +86,7 @@ async def recognize(request):
 
         if len(text) == 0 or frames == 0 or speaker is None:
             print('Unable to recognize speech, reason unknown')
-            return PlainTextResponse('', status_code=500)
+            return PlainTextResponse(status_code=500)
         else:
             voice_id = clusters.recognize(speaker / frames)
             text = re.sub(' +', ' ', text)
@@ -95,12 +96,20 @@ async def recognize(request):
             return JSONResponse({'words': text, 'voiceId': str(voice_id)}, status_code=200)
     except BaseException as err:
         print('Unexpected exception occurred: {}'.format(str(err)))
-        return PlainTextResponse('', status_code=500)
+        return PlainTextResponse(status_code=500)
+
+
+async def health_check(request):
+    return PlainTextResponse(status_code=200)
 
 
 app = Starlette(routes=[
-    Route('/recognize', recognize, methods=["POST"])
+    Route('/recognize', recognize, methods=["POST"]),
+    Route('/health-check', health_check, methods=["POST"])
 ])
 
+ip_addr = socket.gethostbyname(socket.gethostname())
 consul_client = consul.Consul('consul')
-consul_client.agent.service.register(name='recognizer-service', port=8080)
+consul_client.agent.service.register(name='recognizer-service', port=8080, address=ip_addr,
+                                     check=consul.Check.http(url='http://{}:8080/health-check'.format(ip_addr),
+                                                             interval=5))

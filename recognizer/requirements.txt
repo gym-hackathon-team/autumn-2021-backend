@@ -1,0 +1,7 @@
+vosk
+gunicorn
+uvicorn
+numpy
+starlette
+python-multipart
+python-consul
