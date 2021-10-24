@@ -31,8 +31,8 @@ public class VoiceServiceImpl implements VoiceService {
     public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException, UnknownVoiceCommandException {
         //RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart); TODO enable this
         RecognizedVoiceDto recognized = new RecognizedVoiceDto();
-        recognized.setVoiceId("5");
-        recognized.setWords("Пх, окей перевод пользователю пожалуйста. Кхм");
+        recognized.setVoiceId("1.7580954596257448");
+        recognized.setWords("Пх, окей перевести на карту другу пожалуйста. Кхм");
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
@@ -65,8 +65,8 @@ public class VoiceServiceImpl implements VoiceService {
 
         RecognizedVoiceDto recognized = new RecognizedVoiceDto();
         recognized.setWords("окей абоба перевод пользователю андрей");
-        double randId = Math.random() * 10;
-        recognized.setVoiceId(Double.toString(randId));
+
+        recognized.setVoiceId("1.7580954596257448");
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
