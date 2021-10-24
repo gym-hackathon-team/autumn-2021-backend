@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class RecognizedVoiceDto {
 
-    private Long voice_id;
+    private String voiceId;
 
     private String words;
 }
