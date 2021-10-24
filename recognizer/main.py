@@ -105,11 +105,11 @@ async def health_check(request):
 
 app = Starlette(routes=[
     Route('/recognize', recognize, methods=["POST"]),
-    Route('/health-check', health_check, methods=["POST"])
+    Route('/health-check', health_check, methods=["GET"])
 ])
 
 ip_addr = socket.gethostbyname(socket.gethostname())
 consul_client = consul.Consul('consul')
 consul_client.agent.service.register(name='recognizer-service', port=8080, address=ip_addr,
                                      check=consul.Check.http(url='http://{}:8080/health-check'.format(ip_addr),
-                                                             interval=5))
+                                                             interval='5s'))
