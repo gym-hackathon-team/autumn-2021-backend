@@ -6,6 +6,7 @@ import com.gymteam.backend.bff.dto.client.VoiceCommand;
 import com.gymteam.backend.bff.dto.client.VoiceCommandResponse;
 import com.gymteam.backend.bff.dto.recognize.RecognizedVoiceDto;
 import com.gymteam.backend.bff.dto.user.UserDto;
+import com.gymteam.backend.bff.exception.UnknownVoiceCommandException;
 import com.gymteam.backend.bff.exception.VoiceNotMatchingException;
 import com.gymteam.backend.bff.exception.VoiceNotRegisteredException;
 import com.gymteam.backend.bff.security.Authorized;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Locale;
 import java.util.Objects;
 
 @Service
@@ -26,8 +28,11 @@ public class VoiceServiceImpl implements VoiceService {
     public UserClient userClient;
 
     @Override
-    public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException {
-        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart);
+    public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException, UnknownVoiceCommandException {
+        //RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart); TODO enable this
+        RecognizedVoiceDto recognized = new RecognizedVoiceDto();
+        recognized.setVoiceId("1.7580954596257448");
+        recognized.setWords("Пх, окей перевести на карту другу пожалуйста. Кхм");
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
@@ -36,18 +41,32 @@ public class VoiceServiceImpl implements VoiceService {
             throw new VoiceNotMatchingException();
         }
 
-        String[] words = recognized.getWords().split(" ");
-        // TODO Math recognized.getWords with enum
-
         VoiceCommandResponse response = new VoiceCommandResponse();
         response.setDecision(true);
-        response.setVoiceCommand(VoiceCommand.ORGANIZATION_PAYMENT);
+
+        String words = recognized.getWords().toLowerCase(Locale.ROOT);
+        boolean foundUserTransaction = words.contains("перевод пользователю");
+        boolean foundOrganizationPayment = words.contains("оплатить услугу");
+
+        if (foundUserTransaction) {
+            response.setVoiceCommand(VoiceCommand.USER_TRANSACTION);
+        } else if (foundOrganizationPayment) {
+            response.setVoiceCommand(VoiceCommand.ORGANIZATION_PAYMENT);
+        } else {
+            throw new UnknownVoiceCommandException();
+        }
+
         return response;
     }
 
     @Override
     public void registerUserVoice(MultipartFile multipartFile) throws VoiceNotRegisteredException {
-        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile);
+        //RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile); TODO enable this
+
+        RecognizedVoiceDto recognized = new RecognizedVoiceDto();
+        recognized.setWords("окей абоба перевод пользователю андрей");
+
+        recognized.setVoiceId("1.7580954596257448");
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
