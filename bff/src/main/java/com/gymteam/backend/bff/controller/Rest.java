@@ -1,6 +1,7 @@
 package com.gymteam.backend.bff.controller;
 
 import com.gymteam.backend.bff.dto.client.VoiceCommandResponse;
+import com.gymteam.backend.bff.exception.UnknownVoiceCommandException;
 import com.gymteam.backend.bff.exception.VoiceNotMatchingException;
 import com.gymteam.backend.bff.exception.VoiceNotRegisteredException;
 import com.gymteam.backend.bff.service.interfaces.AccountService;
@@ -73,7 +74,7 @@ public class Rest {
     public ResponseEntity<VoiceCommandResponse> voiceCommandVerify(@RequestParam("upload_file") MultipartFile multipart) {
         try {
             return new ResponseEntity<>(voiceService.authorizeVoiceCommand(multipart), HttpStatus.OK);
-        } catch (VoiceNotMatchingException e) {
+        }  catch (UnknownVoiceCommandException | VoiceNotMatchingException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,7 +86,7 @@ public class Rest {
         try {
             voiceService.registerUserVoice(multipart);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (VoiceNotRegisteredException, UnknownVoiceCommandException e) {
+        } catch (VoiceNotRegisteredException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
