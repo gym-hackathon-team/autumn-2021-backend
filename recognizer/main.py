@@ -78,10 +78,10 @@ async def recognize(request):
 
         while len(data) > 0:
             data = process.stdout.read(4000)
-            if rec.AcceptWaveform(data):
-                text, frames, speaker = update_values(text, frames, speaker, rec.Result())
+            if speaker_model.AcceptWaveform(data):
+                text, frames, speaker = update_values(text, frames, speaker, speaker_model.Result())
 
-        text, frames, speaker = update_values(text, frames, speaker, rec.FinalResult())
+        text, frames, speaker = update_values(text, frames, speaker, speaker_model.FinalResult())
 
         if len(text) == 0 or frames == 0 or speaker is None:
             print('Unable to recognize speech, reason unknown')
@@ -103,4 +103,4 @@ app = Starlette(routes=[
 ])
 
 consul_client = consul.Consul('consul')
-consul_client.agent.service.register(name='recognizer-service', port=8080, check=consul.Check.http())
+consul_client.agent.service.register(name='recognizer-service', port=8080)
