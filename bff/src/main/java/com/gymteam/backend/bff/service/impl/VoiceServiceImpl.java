@@ -16,6 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -29,10 +33,7 @@ public class VoiceServiceImpl implements VoiceService {
 
     @Override
     public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException, UnknownVoiceCommandException {
-        //RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart); TODO enable this
-        RecognizedVoiceDto recognized = new RecognizedVoiceDto();
-        recognized.setVoiceId("1.7580954596257448");
-        recognized.setWords("Пх, окей перевод пользователю пожалуйста. Кхм");
+        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart);
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
@@ -60,13 +61,8 @@ public class VoiceServiceImpl implements VoiceService {
     }
 
     @Override
-    public void registerUserVoice(MultipartFile multipartFile) throws VoiceNotRegisteredException {
-        //RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile); TODO enable this
-
-        RecognizedVoiceDto recognized = new RecognizedVoiceDto();
-        recognized.setWords("окей абоба перевод пользователю андрей");
-
-        recognized.setVoiceId("1.7580954596257448");
+    public void registerUserVoice(MultipartFile multipartFile) throws VoiceNotRegisteredException, MalformedURLException, ProtocolException {
+        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile);
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
