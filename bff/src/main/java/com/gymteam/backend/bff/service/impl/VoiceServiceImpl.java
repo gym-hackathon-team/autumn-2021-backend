@@ -32,7 +32,7 @@ public class VoiceServiceImpl implements VoiceService {
         //RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart); TODO enable this
         RecognizedVoiceDto recognized = new RecognizedVoiceDto();
         recognized.setVoiceId("1.7580954596257448");
-        recognized.setWords("Пх, окей перевести на карту другу пожалуйста. Кхм");
+        recognized.setWords("Пх, окей перевод пользователю пожалуйста. Кхм");
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
