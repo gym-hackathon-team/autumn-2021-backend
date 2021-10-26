@@ -16,7 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -29,8 +32,8 @@ public class VoiceServiceImpl implements VoiceService {
     public UserClient userClient;
 
     @Override
-    public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException, UnknownVoiceCommandException, IOException {
-        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(new String(multipart.getBytes()));
+    public VoiceCommandResponse authorizeVoiceCommand(MultipartFile multipart) throws VoiceNotMatchingException, UnknownVoiceCommandException {
+        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipart);
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
@@ -58,8 +61,8 @@ public class VoiceServiceImpl implements VoiceService {
     }
 
     @Override
-    public void registerUserVoice(MultipartFile multipartFile) throws VoiceNotRegisteredException, IOException {
-        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(new String(multipartFile.getBytes()));
+    public void registerUserVoice(MultipartFile multipartFile) throws VoiceNotRegisteredException, MalformedURLException, ProtocolException {
+        RecognizedVoiceDto recognized = recognizerClient.analyzeVoice(multipartFile);
 
         Authorized authorized = (Authorized) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDto user = userClient.getUser(authorized.getId()); // Пользователь точно будет, ибо иначе авторизация не пустит сюда
