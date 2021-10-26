@@ -1,13 +1,14 @@
-import pathlib
-
 import vosk
+import pathlib
 import json
 import shutil
 import subprocess
 import re
-import consul
 import socket
+import consul
+
 import numpy as np
+
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse, PlainTextResponse
 from starlette.routing import Route
@@ -18,7 +19,7 @@ vosk.SetLogLevel(-2)
 sample_rate = 16000
 model = vosk.Model('model')
 spk_model = vosk.SpkModel('model-spk')
-dictionary = 'перевести пользователю оплатить услугу'
+dictionary = 'перевод пользователю оплатить услугу'
 speaker_model = vosk.KaldiRecognizer(model, sample_rate, '["{}", "[unk]"]'.format(dictionary))
 speaker_model.SetSpkModel(spk_model)
 clusters = clusterize.Clusters(pathlib.Path('/data'))
@@ -29,7 +30,7 @@ def process_model_result(result_str):
     try:
         text = result['text']
         if len(text) == 0:
-            return None, None, None
+            return None, None
 
         try:
             processed_frames = result['spk_frames']
@@ -39,26 +40,25 @@ def process_model_result(result_str):
         try:
             speaker = np.array(result['spk']) * processed_frames
         except KeyError:
-            return None, None, None
+            return None, None
 
-        return text, processed_frames, speaker
+        return text, speaker
     except KeyError:
-        return None, None, None
+        return None, None
 
 
-def update_values(text, frames, speaker, result_string):
-    new_text, new_frames, new_speaker = process_model_result(result_string)
-    if new_text is None or new_frames is None or new_speaker is None:
-        return text, frames, speaker
+def update_values(text, speaker, result_string):
+    new_text, new_speaker = process_model_result(result_string)
+    if new_text is None or new_speaker is None:
+        return text, speaker
     else:
         text = text + ' ' + new_text
-        frames += new_frames
 
         if speaker is None:
             speaker = new_speaker
         else:
             speaker += new_speaker
-        return text, frames, speaker
+        return text, speaker
 
 
 async def recognize(request):
@@ -69,7 +69,6 @@ async def recognize(request):
             shutil.copyfileobj(form['upload_file'].file, f)
 
         text = ''
-        frames = 0
         speaker = None
 
         process = subprocess.Popen(
@@ -80,15 +79,15 @@ async def recognize(request):
         while len(data) > 0:
             data = process.stdout.read(4000)
             if speaker_model.AcceptWaveform(data):
-                text, frames, speaker = update_values(text, frames, speaker, speaker_model.Result())
+                text, speaker = update_values(text, speaker, speaker_model.Result())
 
-        text, frames, speaker = update_values(text, frames, speaker, speaker_model.FinalResult())
+        text, speaker = update_values(text, speaker, speaker_model.FinalResult())
 
-        if len(text) == 0 or frames == 0 or speaker is None:
+        if len(text) == 0 or speaker is None:
             print('Unable to recognize speech, reason unknown')
             return PlainTextResponse(status_code=500)
         else:
-            voice_id = clusters.recognize(speaker / frames)
+            voice_id = clusters.add_vector_and_get_id(speaker)
             text = re.sub(' +', ' ', text)
             text = re.sub('\\[unk]', '', text)
             text = text.strip()
@@ -100,16 +99,16 @@ async def recognize(request):
 
 
 async def health_check(request):
-    return PlainTextResponse(status_code=200)
+    return PlainTextResponse('Still alive', status_code=200)
 
 
 app = Starlette(routes=[
     Route('/recognize', recognize, methods=["POST"]),
-    Route('/health-check', health_check, methods=["POST"])
+    Route('/my-health-check', health_check, methods=["GET"])
 ])
 
 ip_addr = socket.gethostbyname(socket.gethostname())
 consul_client = consul.Consul('consul')
 consul_client.agent.service.register(name='recognizer-service', port=8080, address=ip_addr,
-                                     check=consul.Check.http(url='http://{}:8080/health-check'.format(ip_addr),
-                                                             interval=5))
+                                     check=consul.Check.http(url='http://{}:8080/my-health-check'.format(ip_addr),
+                                                             interval='5s'))
